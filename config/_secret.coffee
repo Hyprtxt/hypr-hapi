@@ -1,6 +1,7 @@
 Confidence = require('confidence')
 
 store = new Confidence.Store
+  loggly: ''
   socialAuth:
     $filter: 'env'
     $base:
