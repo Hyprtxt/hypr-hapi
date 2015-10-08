@@ -1,4 +1,4 @@
-# Hypr Hapi
+# Hyprtxt Static
 
 I can make the things with this, you too!
 
@@ -83,17 +83,3 @@ Coffee Script is at the very heart of this project.
 ### Jade
 
 The HTML template language
-
-## Hapi
-
-[Hapi](http://hapijs.com/) is a collection of modules that form the foundation of this application.
-
-Files in the `./static` & `./static_generated` directory are served up as-is by Hapi
-
-In addition to the core modules, serveral other Hapi modules are used by this project:
-
-* Vision - view rendering
-* Good - logging
-* Boom - errors
-* Confidence - configuration
-* Inert - static file serving
