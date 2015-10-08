@@ -1,5 +1,5 @@
 module.exports =
-  title: 'Hypr-Hapi'
+  title: 'Hyprtxt Static'
   javascripts: [
     '/js/jquery.min.js'
     '/js/script.js'
@@ -8,10 +8,13 @@ module.exports =
     '/css/style.css'
   ]
   navbarBrand:
-    title: 'Hyprtxt'
+    title: 'Hyprtxt Static'
     link: '/'
   navigation: [
     title: 'A Link'
+    link: '#somewhere'
+  ,
+    title: 'Another Link'
     link: '#somewhere'
   ]
   timestamp: new Date()

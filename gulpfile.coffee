@@ -9,12 +9,14 @@ rimraf = require 'rimraf'
 list = require 'gulp-task-listing'
 exec = require('child_process').exec
 
-gulp.task 'default', list
+dest = './static_generated'
+
+gulp.task 'default', [ 'watch' ]
 
 gulp.task 'help', list
 
 gulp.task 'clean', ( cb ) ->
-  return rimraf './static_generated', cb
+  return rimraf dest, cb
 
 gulp.task 'sass', ->
   return gulp.src './src/sass/**/*.sass'
@@ -25,21 +27,21 @@ gulp.task 'sass', ->
       ).on 'error', sass.logError
     .pipe autoprefixer ['> 1%']
     .pipe sourcemaps.write '../map' # , sourceRoot: __dirname + './src'
-    .pipe gulp.dest './static_generated/css'
+    .pipe gulp.dest dest + '/css'
     .pipe livereload()
 
 gulp.task 'copyjs', ->
   gulp.src './bower_components/bootstrap/js/dist/*'
-    .pipe gulp.dest './static_generated/js/bootstrap'
+    .pipe gulp.dest dest + '/js/bootstrap'
   return gulp.src './bower_components/jquery/dist/*'
-    .pipe gulp.dest './static_generated/js/jquery'
+    .pipe gulp.dest dest + '/js/jquery'
 
 gulp.task 'copycss', ->
   return
 
 gulp.task 'copyfont', ->
   return gulp.src './bower_components/font-awesome/fonts/*'
-    .pipe gulp.dest './static_generated/fonts'
+    .pipe gulp.dest dest + '/fonts'
 
 gulp.task 'coffee', ->
   return gulp.src './src/coffee/**/*.coffee'
@@ -48,41 +50,55 @@ gulp.task 'coffee', ->
         bare: true
       ).on 'error', gutil.log
     .pipe sourcemaps.write '../map' # , sourceRoot: __dirname + './src'
-    .pipe gulp.dest './static_generated/js'
+    .pipe gulp.dest dest + '/js'
     .pipe livereload()
 
 gulp.task 'reload', ->
   return livereload.reload()
 
 gulp.task 'watch', [ 'copyfont', 'copycss', 'sass', 'copyjs', 'coffee' ], ->
+  gulp.watch './static/**/*.*', ['reload']
   gulp.watch './src/sass/**/*.sass', ['sass']
   gulp.watch './src/coffee/**/*.coffee', ['coffee']
-  gulp.watch './views/**/*.jade', ['reload']
-  gulp.watch './static/**/*.*', ['reload']
-  gulp.watch './readme.md', ['reload']
+  gulp.watch './views/**/*.jade', ['jade']
+  gulp.watch './view-data/**/*.coffee', ['jade']
+  gulp.watch './readme.md', ['jade']
   return livereload.listen
     basePath: './src'
     start: true
 
 # static site stuff
-
 jade = require 'gulp-jade'
-gulp.task 'jade', [ 'cleanstatic' ], ->
+fs = require 'fs'
+coffeeScript = require 'coffee-script'
+
+jadeData = {}
+gulp.task 'setupJadeData', ( next ) ->
+  fs.readFile './view-data/global.coffee', 'utf8', ( err, _data ) ->
+    if err
+      throw err
+    else
+      coffeeopts =
+        bare: true
+        header: false
+      jadeData = eval coffeeScript.compile _data, coffeeopts
+      console.log jadeData
+    return next()
+
+gulp.task 'jade', [ 'setupJadeData' ], ->
   return gulp.src [ './views/**/*.jade', '!./views/layout/**' ]
     .pipe jade
-      locals: require './view-data/global'
+      locals: jadeData
       pretty: true
-    .pipe gulp.dest './public_html'
+    .pipe gulp.dest dest
+    .pipe livereload()
 
-gulp.task 'copystatic', [ 'jade', 'copyfont', 'copycss', 'sass', 'copyjs', 'coffee' ], ->
-  return gulp.src [ './static/**', './static_generated/**' ]
-    .pipe gulp.dest './public_html'
+gulp.task 'copystatic', ->
+  return gulp.src [ './static/**', dest + '/**' ]
+    .pipe gulp.dest dest
 
-gulp.task 'cleanstatic', ( cb ) ->
-  return rimraf './public_html', cb
+gulp.task 'render', [ 'copystatic', 'jade', 'copyfont', 'copycss', 'sass', 'copyjs', 'coffee' ], ( cb ) ->
+  return rimraf dest + '/map', cb
 
-gulp.task 'cleanmap', [ 'copystatic' ], ( cb ) ->
-  return rimraf './public_html/map', cb
-
-gulp.task 'render', [ 'cleanstatic', 'copystatic', 'cleanmap' ], ->
-  return
+gulp.task 'build', [ 'clean' ], ->
+  return gulp.start 'render'

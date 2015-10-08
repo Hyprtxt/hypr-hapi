@@ -1,6 +1,10 @@
-# Hyprtxt Static
+# NASM Static
+
+! Needs Hot loader function, use FS to load and render the global Coffee Script file.
 
 I can make the things with this, you too!
+
+It's pretty neat stuff, real fast
 
 * Freedom of software
 * The terminal is your friend
@@ -11,7 +15,7 @@ I can make the things with this, you too!
 
 ## Get Started
 
-You'll need
+You'll need some things!
 
 * Node installed with NVM
 * [Atom](https://atom.io/) - Text Editor
