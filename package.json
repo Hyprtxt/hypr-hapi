@@ -33,6 +33,7 @@
     "jstransformer-markdown-it": "^0.1.0",
     "mkdirp": "^0.5.1",
     "nodemon": "^1.4.1",
+    "request": "^2.64.0",
     "rimraf": "^2.4.3",
     "through2": "^2.0.0",
     "touch": "^1.0.0",

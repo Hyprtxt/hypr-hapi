@@ -5,4 +5,13 @@ block content
     .col-md-12
       h1 The Beer Cooler!
       p Welcome to the beer cooler
-      #container Loading...
+    #container Loading...
+
+  script#beerTemplate(type='text/template')
+    .card-block
+      h3.card-title <%- name %>
+      p.card-text Likes <%- likes %>
+      button.btn.btn-primary-outline
+        .fa.fa-beer
+        |  Like
+        .fa.fa-beer.fa-flip-horizontal
