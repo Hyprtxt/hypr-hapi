@@ -1,13 +1,12 @@
-# NASM Static
+# Hyprtxt Static
 
-! Needs Hot loader function, use FS to load and render the global Coffee Script file.
+I can make the things with this, you too! It's pretty neat stuff; Real fast cause it's async and parallel.
 
-I can make the things with this, you too!
+Hyprtxt static is built on the following principles:
 
-It's pretty neat stuff, real fast
-
-* Freedom of software
+* Software Freedom
 * The terminal is your friend
+* JavaScript (but... Coffee!)
 * Whitespace is king
 * Automate all the things
 * Source control, `git`
@@ -24,6 +23,10 @@ You'll need some things!
   * The [LiveReload Extension](https://chrome.google.com/webstore/detail/livereload/jnihajbhpnppcggbcgedagnkighmdlei?hl=en) for Chrome
 * iTerm2 - A Terminal
 
+### Install NVM
+
+`curl -o- https://raw.githubusercontent.com/creationix/nvm/v0.28.0/install.sh | bash`
+
 #### Install Bower and Gulp globally
 
 `npm i -g bower gulp`
@@ -34,16 +37,15 @@ You'll need some things!
 
 #### Fire it up!
 
-`npm start` in Terminal #1
-`gulp watch` in Terminal #2
+`gulp watch`
 
-### Install NVM
-
-`curl -o- https://raw.githubusercontent.com/creationix/nvm/v0.28.0/install.sh | bash`
+That will create the `static_generated` directory, where you final web site lives.
 
 ### Install Nginx
 
 @todo For OSX and Ubuntu?
+
+You want to serve up the `static_generated` directory, use your hosts file to create a domain like gulp.hyprtxt.dev for local development.
 
 # Front End
 
@@ -78,7 +80,7 @@ Files in the `./src` directory are compiled and output to the `./static_generate
 
 ### SASS
 
-Okay this one is technically a Ruby module. Used for CSS.
+Okay this one is technically a Ruby module. Used for CSS. Stylus is better, but Font Awesome and Bootstrap are written in SASS...
 
 ### Coffee Script
 
@@ -86,4 +88,4 @@ Coffee Script is at the very heart of this project.
 
 ### Jade
 
-The HTML template language
+Preferred HTML template language.
