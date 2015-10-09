@@ -1,5 +1,47 @@
 # Beer Test
 
+@todo, prune package.json
+
+
+### Deps
+
+```
+npm i
+npm i -g gulp bower nodemon coffee-script
+bower install
+```
+
+
+### Make it go
+```
+nodemon proxy.coffee
+gulp
+```
+
+### Nginx Configuration
+
+```
+server {
+  listen 80;
+  server_name gulp.hyprtxt.dev;
+  root /var/www/gulp.hyprtxt.com/static_generated;
+  location / {
+    index index.html;
+    autoindex on;
+  }
+  location /api {
+    proxy_pass http://gulp.hyprtxt.dev:8080;
+    include global/proxy.conf;
+  }
+}
+```
+
+### Hosts File
+
+```
+127.0.0.1 gulp.hyprtxt.dev
+```
+
 # Hyprtxt Static
 
 I can make the things with this, you too! It's pretty neat stuff; Real fast cause it's async and parallel.

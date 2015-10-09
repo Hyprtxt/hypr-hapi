@@ -19,6 +19,26 @@ server.route
         return reply JSON.parse body
 
 server.route
+  method: 'POST'
+  path: '/api'
+  config:
+    cors: true
+    payload:
+      output: 'data'
+      parse: true
+    handler: ( request, reply ) ->
+      beerRun =
+        method: 'POST'
+        uri: 'http://beer.fluentcloud.com/v1/beer/'
+        json: true
+        body: request.payload
+      console.log request.payload
+      return Request beerRun, ( error, response, body ) ->
+        if error
+          throw error
+        return reply body
+
+server.route
   method: 'PUT'
   path: '/api/{id}'
   config:
@@ -27,7 +47,6 @@ server.route
       output: 'data'
       parse: true
     handler: ( request, reply ) ->
-      console.log request.payload
       beerRun =
         method: 'PUT'
         uri: 'http://beer.fluentcloud.com/v1/beer/' + request.params.id
@@ -47,7 +66,6 @@ server.route
       output: 'data'
       parse: true
     handler: ( request, reply ) ->
-      console.log request.payload
       beerRun =
         method: 'DELETE'
         uri: 'http://beer.fluentcloud.com/v1/beer/' + request.params.id

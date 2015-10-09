@@ -8,15 +8,16 @@ block content
     #container Loading...
 
   script#beerTemplate(type='text/template')
-    .card-block
-      h3.card-title <%= name %>
-      p.card-test ID <%= id %>
-      p.card-text Likes <%= likes %>
-      button.btn.btn-primary-outline
-        .fa.fa-beer
-        |  Like
-        .fa.fa-beer.fa-flip-horizontal
-      button.btn.btn-danger-outline
-        .fa.fa-ban
-        |  Delete
-        .fa.fa-trash-o
+    .card
+      .card-block
+        h3.card-title <%= name %>
+        p.card-test ID <%= id %>
+        p.card-text Likes <%= likes %>
+        button.btn.btn-primary-outline
+          .fa.fa-beer
+          |  Like
+          .fa.fa-beer.fa-flip-horizontal
+        button.btn.btn-danger-outline
+          .fa.fa-ban
+          |  Delete
+          .fa.fa-trash-o

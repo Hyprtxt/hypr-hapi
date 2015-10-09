@@ -1,5 +1,8 @@
 console.log 'script loaded'
 
+logIt = ( data ) ->
+  return console.log data
+
 Beer = Backbone.Model.extend
   defaults:
     id: 0
@@ -12,6 +15,19 @@ Cooler = Backbone.Collection.extend
 
 # tapHouse = 'http://beer.fluentcloud.com/v1/beer'
 tapHouse = '/api'
+
+# Doing it wrong!
+$form = $ '#add'
+$form.on 'submit', ( e ) ->
+  e.preventDefault()
+  opts =
+    url: tapHouse
+    method: 'POST'
+    success: ->
+      return window.location.href = '/'
+    data: $form.serializeArray()
+  $.ajax opts
+  return
 
 $.ajax tapHouse,
   success: ( data ) ->
@@ -39,8 +55,7 @@ BeerView = Backbone.View.extend
       data:
         likes: likes + 1
       dataType: 'json'
-      success: ( data ) ->
-        return console.log data
+      success: logIt
     $.ajax opts
     this.render()
     return this
@@ -54,8 +69,7 @@ BeerView = Backbone.View.extend
       data:
         likes: likes + 1
       dataType: 'json'
-      success: ( data ) ->
-        return console.log data
+      success: logIt
     $.ajax opts
     this.remove()
     this.render()
@@ -70,7 +84,7 @@ CoolerView = Backbone.View.extend
   render: ->
     this.$el.html ''
     this.collection.each ( beer ) ->
-      beerView = new BeerView model: beer, className: 'card col-md-4'
+      beerView = new BeerView model: beer, className: 'col-md-6 col-lg-4 m-b'
       this.$el.append beerView.el
     , this
     return this

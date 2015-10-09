@@ -16,8 +16,8 @@ module.exports =
     title: 'Readme'
     link: '/readme.html'
   ,
-    title: 'Another Link'
-    link: '#somewhere'
+    title: 'Add Beer'
+    link: '/add.html'
   ]
   env: process.env.NODE_ENV
   # JSON.stringify( process.env, null, 2 )
