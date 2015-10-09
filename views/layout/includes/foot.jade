@@ -3,9 +3,7 @@
   .row
     .col-sm-12
       hr
-      pre=JSON.stringify( session, null, 2 )
+      pre='NODE_ENV: ' + env
       hr
-script.
-  var session=!{JSON.stringify( session )}
 each script in javascripts
   script(src=script)

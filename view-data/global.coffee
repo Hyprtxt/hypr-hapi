@@ -1,7 +1,9 @@
 module.exports =
   title: 'Hyprtxt Static'
   javascripts: [
-    '/js/jquery.min.js'
+    '/js/jquery/jquery.min.js'
+    '/js/underscore/underscore-min.js'
+    '/js/backbone/backbone-min.js'
     '/js/script.js'
   ]
   stylesheets: [
@@ -11,10 +13,12 @@ module.exports =
     title: 'Hyprtxt Static'
     link: '/'
   navigation: [
-    title: 'A Link'
-    link: '#somewhere'
+    title: 'Readme'
+    link: '/readme.html'
   ,
     title: 'Another Link'
     link: '#somewhere'
   ]
+  env: process.env.NODE_ENV
+  # JSON.stringify( process.env, null, 2 )
   timestamp: new Date()
