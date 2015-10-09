@@ -1,46 +1,17 @@
-# Beer Test
+# Facebook Lead Gen -> Acton
 
-@todo, prune package.json
-
-
-### Deps
-
-```
-npm i
-npm i -g gulp bower nodemon coffee-script
-bower install
-```
+* User must accept: https://www.facebook.com/ads/leadgen/tos
 
 
-### Make it go
-```
-nodemon proxy.coffee
-gulp
-```
+AD ID - 6030653854460
+app_id: '1513710378927269'
+app_secret: 'b7741bad6244c28f34d6bdc2e9116def'
 
-### Nginx Configuration
 
-```
-server {
-  listen 80;
-  server_name gulp.hyprtxt.dev;
-  root /var/www/gulp.hyprtxt.com/static_generated;
-  location / {
-    index index.html;
-    autoindex on;
-  }
-  location /api {
-    proxy_pass http://gulp.hyprtxt.dev:8080;
-    include global/proxy.conf;
-  }
-}
-```
+Get Real Time Subscriptions: https://developers.facebook.com/docs/graph-api/reference/v2.5/app/subscriptions
 
-### Hosts File
 
-```
-127.0.0.1 gulp.hyprtxt.dev
-```
+
 
 # Hyprtxt Static
 

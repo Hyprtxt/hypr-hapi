@@ -12,8 +12,8 @@ store = new Confidence.Store
       host: 'localhost'
       port: 8006
     $default: # for devs
-      host: 'nasm.dev'
-      port: 8008
+      host: 'acton.nasm.dev'
+      port: 8006
 
   view:
     $filter: 'env'
@@ -49,11 +49,12 @@ store = new Confidence.Store
       options:
         server:
           protocol: 'http'
-          host: 'nasm.dev'
+          host: 'acton.nasm.dev'
           callback: '/callback'
-          transport: 'session'
+          transport: 'querystring'
           state: true
         acton:
+          # Technically Secrets, but this is a private repo
           # # NASM
           # key: '70wyAs_4Vn057gAcGodAOXnLYNQa'
           # secret: 't7ThrJQapiUsVgdslbfqPoQuKIUa'
@@ -61,8 +62,15 @@ store = new Confidence.Store
           key: 'Drqi8At9LgrlHQUP4S6a6rEJrDIa'
           secret: '_TifPts48nGDvcqZgXvQ6cY63Swa'
           scope: [ 'PRODUCTION' ]
-          callback: 'http://nasm.dev/acton/callback'
-          redirect_uri: 'http://nasm.dev/acton/callback'
+          callback: '/acton/callback'
+          # redirect_uri: 'http://nasm.dev/acton/callback'
+        facebook:
+          key: '1513710378927269'
+          secret: 'b7741bad6244c28f34d6bdc2e9116def'
+          # https://developers.facebook.com/docs/facebook-login/permissions/v2.5
+          # scope: [ 'ads_management' ]
+          scope: [ 'public_profile' ]
+          callback: '/facebook/callback'
     ,
     # # jade helper
     #   register: require '../plugins/jade'
