@@ -1,3 +1,5 @@
+# Beer Test
+
 # Hyprtxt Static
 
 I can make the things with this, you too! It's pretty neat stuff; Real fast cause it's async and parallel.

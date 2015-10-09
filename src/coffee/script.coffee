@@ -11,7 +11,7 @@ Cooler = Backbone.Collection.extend
   model: Beer
 
 # tapHouse = 'http://beer.fluentcloud.com/v1/beer'
-tapHouse = 'http://localhost:8080/'
+tapHouse = '/api'
 
 $.ajax tapHouse,
   success: ( data ) ->
@@ -27,10 +27,37 @@ BeerView = Backbone.View.extend
     this.$el.html this.template this.model.toJSON()
     return this
   events:
-    'click .btn': 'likeBeer'
+    'click .btn-primary-outline': 'likeBeer'
+    'click .btn-danger-outline': 'deleteBeer'
   likeBeer: ->
     likes = parseInt this.model.get 'likes'
     this.model.set 'likes', likes + 1
+    id = parseInt this.model.get 'id'
+    opts =
+      url: tapHouse + '/' + id
+      method: 'PUT'
+      data:
+        likes: likes + 1
+      dataType: 'json'
+      success: ( data ) ->
+        return console.log data
+    $.ajax opts
+    this.render()
+    return this
+  deleteBeer: ->
+    likes = parseInt this.model.get 'likes'
+    this.model.set 'likes', likes + 1
+    id = parseInt this.model.get 'id'
+    opts =
+      url: tapHouse + '/' + id
+      method: 'DELETE'
+      data:
+        likes: likes + 1
+      dataType: 'json'
+      success: ( data ) ->
+        return console.log data
+    $.ajax opts
+    this.remove()
     this.render()
     return this
 
