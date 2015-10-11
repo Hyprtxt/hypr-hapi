@@ -5,7 +5,7 @@ server = new Hapi.Server()
 
 server.connection
   host: 'gulp.hyprtxt.dev'
-  port: 8080
+  port: 8010
 
 server.route
   method: 'GET'
