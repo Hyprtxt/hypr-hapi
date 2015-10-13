@@ -1,17 +1,20 @@
 Hapi = require 'hapi'
-Yar = require 'yar'
 Request = require 'request'
+
+config = require './config'
 
 server = new Hapi.Server()
 
-server.connection require('./config').get('/connection')
+server.connection config.get '/connection'
 
-server.register require('./config').get('/plugin'), ( err ) ->
+server.register config.get('/plugin'), ( err ) ->
   if err
     throw err
   return
 
-server.views require('./config').get('/view')
+server.auth.strategy
+
+server.views config.get('/view')
 
 server.route
   method: 'GET'
@@ -36,8 +39,9 @@ server.route
   path: '/{provider}/callback'
   config:
     handler: ( request, reply ) ->
-      console.log request.query
-      request.session.set request.params.provider, request.query.raw
+      console.log request.query, 'QUERY'
+      grant = request.session.get 'grant'
+      request.session.set grant.provider, grant.response.raw
       return reply.redirect '/'
 
 server.route
@@ -57,19 +61,6 @@ server.route
     handler: ( request, reply ) ->
       console.log request.payload
       return reply( request.payload.hub.challenge )
-
-# Static
-server.route
-  method: 'GET'
-  path: '/{param*}'
-  handler:
-    directory:
-      path: [
-        './static/'
-        './static_generated/'
-      ]
-      redirectToSlash: true
-      listing: true
 
 server.start ->
   return console.log 'Server started at: ', server.info.uri

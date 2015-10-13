@@ -1,106 +1,214 @@
 # Facebook Lead Gen -> Acton
 
-* User must accept: https://www.facebook.com/ads/leadgen/tos
+Tunnel local site to internet with SSL `ssh -R 8080:localhost:8100 ht`
 
+* User must accept: [Leadgen TOS](https://www.facebook.com/ads/leadgen/tos)
 
-AD ID - 6030653854460
-app_id: '1513710378927269'
-app_secret: 'b7741bad6244c28f34d6bdc2e9116def'
+# @todo
 
+1. How are Act On lists segmented? Will data be overwritten by CRM, are more fields required?
+1. Complete Process with CURL
+1. Manage Token Expiration
+1. Auto Update from Real FB Data, check that subscription is working.
+1. Deploy!
 
-Get Real Time Subscriptions: https://developers.facebook.com/docs/graph-api/reference/v2.5/app/subscriptions
+## Notes
 
+* AD ID - 6030653854460
+* app_id: '1513710378927269'
+* app_secret: 'b7741bad6244c28f34d6bdc2e9116def'
 
+* NASM Page ID - 50318073949
 
+# Facebook Stuff
 
-# Hyprtxt Static
+### Get App Access Token
 
-I can make the things with this, you too! It's pretty neat stuff; Real fast cause it's async and parallel.
+Login with oauth to get a user token
 
-Hyprtxt static is built on the following principles:
+```
+curl \
+-F "client_id=1513710378927269" \
+-F "client_secret=b7741bad6244c28f34d6bdc2e9116def" \
+-F "grant_type=client_credentials" \
+https://graph.facebook.com/oauth/access_token
+```
 
-* Software Freedom
-* The terminal is your friend
-* JavaScript (but... Coffee!)
-* Whitespace is king
-* Automate all the things
-* Source control, `git`
-* `s/ftp` is something to be avoided
+### Setup Callback Subscription
 
-## Get Started
+https://developers.facebook.com/docs/graph-api/reference/v2.5/app/subscriptions
 
-You'll need some things!
+```
+curl -X POST \
+-F "object=page" \
+-F "callback_url=https://tunnel.hyprtxt.com/realtime" \
+-F "fields=leadgen" \
+-F "access_token=1513710378927269|ekxRolnHjwt8BzUxKpOwOVthWJ0" \
+-F "verify_token=verify1234" \
+https://graph.facebook.com/v2.5/1513710378927269/subscriptions
+```
 
-* Node installed with NVM
-* [Atom](https://atom.io/) - Text Editor
-* [Nginx](https://www.nginx.com/) - Web Server
-* [Chrome](https://www.google.com/chrome/) - Browser
-  * The [LiveReload Extension](https://chrome.google.com/webstore/detail/livereload/jnihajbhpnppcggbcgedagnkighmdlei?hl=en) for Chrome
-* iTerm2 - A Terminal
+### Read Subscriptions
 
-### Install NVM
+```
+curl \
+-F "object=page" \
+-F "callback_url=https://tunnel.hyprtxt.com/realtime" \
+-F "fields=leadgen" \
+-F "access_token=1513710378927269|ekxRolnHjwt8BzUxKpOwOVthWJ0" \
+-F "verify_token=verify1234" \
+https://graph.facebook.com/v2.5/1513710378927269/subscriptions
+```
 
-`curl -o- https://raw.githubusercontent.com/creationix/nvm/v0.28.0/install.sh | bash`
+### Delete Subscriptions
+```
+curl -X DELETE \
+-F "object=page" \
+-F "access_token=1513710378927269|ekxRolnHjwt8BzUxKpOwOVthWJ0" \
+https://graph.facebook.com/v2.5/1513710378927269/subscriptions
+```
 
-#### Install Bower and Gulp globally
+### Send Test Data
+```
+curl -X POST \
+-F "object=page" \
+-F "fields=leadgen" \
+-F "access_token=1513710378927269|ekxRolnHjwt8BzUxKpOwOVthWJ0" \
+https://graph.facebook.com/v2.5/1513710378927269/subscriptions_sample
+```
 
-`npm i -g bower gulp`
+### Download CSV
 
-#### Install `node_modules` and `bower_components`
+User Token Here!
 
-`npm install;bower install`
+```
+curl -G \
+-d "access_token=CAAVgtiltxKUBAJWlX45KH2qCRKN4EK5ZA061aZBpr3OUyxT9Da89ZA9zw04PQCKHI2R78hMvefZBgzEtslChqmHI7TGocw42XSPhMOg7OGPdVJ7fIDXA239jvbpImZBAZAZAa3Kv3TLWFqPaoZAfD1D3UDZA9T3NDcwDDKtquWAZCLEtxRq2ZBDCLasX3yiPcBlljAZD" \
+https://graph.facebook.com/v2.5/50318073949/leadgen_forms
+```
 
-#### Fire it up!
+### Get Lead Data
 
-`gulp watch`
+```
+curl -G \
+-d "access_token=CAAVgtiltxKUBAJWlX45KH2qCRKN4EK5ZA061aZBpr3OUyxT9Da89ZA9zw04PQCKHI2R78hMvefZBgzEtslChqmHI7TGocw42XSPhMOg7OGPdVJ7fIDXA239jvbpImZBAZAZAa3Kv3TLWFqPaoZAfD1D3UDZA9T3NDcwDDKtquWAZCLEtxRq2ZBDCLasX3yiPcBlljAZD" \
+https://graph.facebook.com/v2.5/6030653854460/leads
+```
 
-That will create the `static_generated` directory, where you final web site lives.
+### Send Sample Data
 
-### Install Nginx
+not working? "App must be on whitelist"
 
-@todo For OSX and Ubuntu?
+```
+curl \
+-F "object=page" \
+-F "field=leadgen" \
+-F "access_token=1513710378927269|ekxRolnHjwt8BzUxKpOwOVthWJ0" \
+https://graph.facebook.com/v2.5/50318073949/subscriptions_sample
+```
 
-You want to serve up the `static_generated` directory, use your hosts file to create a domain like gulp.hyprtxt.dev for local development.
+# Acton Endpoint
 
-# Front End
+`https://restapi.actonsoftware.com/token`
 
-## Configuration
+Use oauth2 to get a user token
 
-`./view-data/global.coffee` is passed to all Jade templates. Use it for global front-end configuration values.
+Facebook Leads Target List: `l-dyn-lead-004b`
 
-# Node Package Manager
+Facebook Empty Test List: `l-0068` (Does not work, not setup, just a folder???)
 
-Well, you're here after all, so I'd guess you already know why `npm` is so great. What follows is a an explanation of the major packages in use by Hyprtxt.
+Taylor's Test List: `l-0086`
 
-# Bower
+### Acton Get List of Lists
 
-Bower is used to manage OP's (other peoples) client side code.
+```
+curl -X GET \
+-H "Authorization: Bearer 9ecc7166817e54eab9ddc749f037ff2c" \
+-H "Cache-Control: no-cache" \
+https://restapi.actonsoftware.com/api/1/list?listingtype=CONTACT_LIST
+```
 
-* jQuery
-* Bootstrap
-* Font Awesome
+### Acton Download List
 
-## Gulp
+```
+curl -X GET \
+-H "Authorization: Bearer 9ecc7166817e54eab9ddc749f037ff2c" \
+-H "Cache-Control: no-cache" \
+https://restapi.actonsoftware.com/api/1/list/l-0086
+```
 
-[Gulp](http://gulpjs.com/) is a task runner that enables awesome like:
+### Acton Add to List
 
-* Automated moving of the things (copies files for us, enables Bower)
-* SASS (Source Mapping, AutoPrefixing)
-* CoffeeScript (Source Mapping)
-* Jade (HAPI or Static)
-* LiveReload (Via Chrome Extension)
-* Static website building
+Upload a file? This is cray cray...
 
-Files in the `./src` directory are compiled and output to the `./static_generated` directory
+```
+curl -X PUT
+-H "Authorization: Bearer 9ecc7166817e54eab9ddc749f037ff2c" \
+-H "Cache-Control: no-cache" \
+-H "Content-Type: multipart/form-data" \
+-F "listname=InvitationTokens" \
+-F "headings=Y" \
+-F "fieldseperator=COMMA" \
+-F "quotecharacter=NONE" \
+-F "uploadspecs=[{"columnHeading":"Email","ignoreColumn":"N","columnIndex":0,"columnType":"EMAIL"},{"columnHeading":"First Name","ignoreColumn":"N","columnIndex":1},{"columnHeading":"Last Name","ignoreColumn":"N","columnIndex":2},{"columnHeading":"Company","ignoreColumn":"N","columnIndex":3}]" \
+-F "file=" \
+-F "foldername=nil" \
+-F "mergespecs=[{"dstListId":"l-08fd","mergeMode":"UPSERT","columnMap":[]}]" \
+-F "listId=l-08fd" \
+https://restapi.actonsoftware.com/api/1/list/l-08fd
+```
 
-### SASS
+### Acton Add Contact
 
-Okay this one is technically a Ruby module. Used for CSS. Stylus is better, but Font Awesome and Bootstrap are written in SASS...
+```
+curl -X POST \
+-H "Authorization: Bearer 9ecc7166817e54eab9ddc749f037ff2c" \
+-H "Content-Type: application/json" \
+-H "Cache-Control: no-cache" \
+-d '{"Email":"taylor.young@ascendlearning.com","First Name":"Taylor","Last Name":"Young"}' \
+https://restapi.actonsoftware.com/api/1/list/l-0086/record
 
-### Coffee Script
+curl -X POST \
+-H "Authorization: Bearer 9ecc7166817e54eab9ddc749f037ff2c" \
+-H "Content-Type: application/json" \
+-H "Cache-Control: no-cache" \
+-d '{"Email":"taylor.young@ascendlearning.com","Name":"Taylor Young","First Name":"Taylor","Last Name":"Young"}' \
+https://restapi.actonsoftware.com/api/1/list/l-dyn-lead-004b/record
+```
+curl -X POST -H "Authorization: Bearer d46940913759bf58f4c1778ed54e43" -H "Content-Type: application/json" -H "Cache-Control: no-cache" -d '{"Email":"john.doe@somedomain.com","Test1":"John","Test2":"Doe"}' https://restapi.actonsoftware.com/api/1/list/l-0003/record
 
-Coffee Script is at the very heart of this project.
+## Interesting TLDs
 
-### Jade
+* .coach
+* .fit
+* .fitness
+* .golf
+* .fans
+* .football
+* .guide
+* .info
+* .news
+* .training
+* .yoga
 
-Preferred HTML template language.
+## Interesting Domains
+
+* sportsmedicine.net
+* sportsmedicine.guide
+* sportsmedicine.training
+* sportsmedicine.fitness
+* sportsmedicine.coach
+* afaa.fitness
+* afaa.guide
+* afaa.guru
+* afaa.coach
+* afaa.academy
+* afaa.training
+* nasm.guide
+* nasm.email
+* bethe.coach
+* sports.coach (premium $820 @ google)
+* physicalfitness.training
+* physicalfitness.guide
+* physicalfitness.coach
+* physicalfitness.academy

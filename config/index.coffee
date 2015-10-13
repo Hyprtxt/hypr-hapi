@@ -54,7 +54,7 @@ store = new Confidence.Store
           protocol: 'http'
           host: 'acton.nasm.dev'
           callback: '/callback'
-          transport: 'querystring'
+          transport: 'session'
           state: true
         acton:
           # Technically Secrets, but this is a private repo
@@ -72,7 +72,7 @@ store = new Confidence.Store
           secret: 'b7741bad6244c28f34d6bdc2e9116def'
           # https://developers.facebook.com/docs/facebook-login/permissions/v2.5
           # scope: [ 'ads_management' ]
-          scope: [ 'public_profile' ]
+          scope: [ 'public_profile', 'ads_read', 'manage_pages', 'user_website', 'user_status' ]
           callback: '/facebook/callback'
     ,
     # # jade helper
@@ -92,7 +92,7 @@ store = new Confidence.Store
           events:
             log: '*'
             response: '*'
-          config: Path.join( __dirname, '../log', 'good.log' )
+          config: Path.join( __dirname, '../logs', 'good.log' )
         ]
   ]
 

@@ -18,25 +18,13 @@ gulp.task 'help', list
 gulp.task 'clean', ( cb ) ->
   return rimraf dest, cb
 
-gulp.task 'sass', ->
-  return gulp.src './src/sass/**/*.sass'
-    .pipe sourcemaps.init()
-    .pipe sass(
-        outputStyle: 'expanded'
-        includePaths: [ './bower_components/' ]
-      ).on 'error', sass.logError
-    .pipe autoprefixer ['> 1%']
-    .pipe sourcemaps.write '../map' # , sourceRoot: __dirname + './src'
-    .pipe gulp.dest dest + '/css'
-    .pipe livereload()
+gulp.task 'copystatic', ->
+  return gulp.src './static/**'
+    .pipe gulp.dest dest
 
 gulp.task 'copyjs', ->
   gulp.src './bower_components/bootstrap/js/dist/*'
     .pipe gulp.dest dest + '/js/bootstrap'
-  gulp.src './bower_components/underscore/**.js'
-    .pipe gulp.dest dest + '/js/underscore'
-  gulp.src './bower_components/backbone/**.js'
-    .pipe gulp.dest dest + '/js/backbone'
   return gulp.src './bower_components/jquery/dist/*'
     .pipe gulp.dest dest + '/js/jquery'
 
@@ -53,6 +41,18 @@ gulp.task 'copyfont', ->
   return gulp.src './bower_components/font-awesome/fonts/*'
     .pipe gulp.dest dest + '/fonts'
 
+gulp.task 'sass', ->
+  return gulp.src './src/sass/**/*.sass'
+    .pipe sourcemaps.init()
+    .pipe sass(
+        outputStyle: 'expanded'
+        includePaths: [ './bower_components/' ]
+      ).on 'error', sass.logError
+    .pipe autoprefixer ['> 1%']
+    .pipe sourcemaps.write '../map' # , sourceRoot: __dirname + './src'
+    .pipe gulp.dest dest + '/css'
+    .pipe livereload()
+
 gulp.task 'coffee', ->
   return gulp.src './src/coffee/**/*.coffee'
     .pipe sourcemaps.init()
@@ -66,13 +66,13 @@ gulp.task 'coffee', ->
 gulp.task 'reload', ->
   return livereload.reload()
 
-gulp.task 'watch', [ 'copyfont', 'copycss', 'sass', 'copymap', 'copyjs', 'coffee' ], ->
+gulp.task 'watch', [ 'copystatic', 'copyfont', 'copycss', 'sass', 'copymap', 'copyjs', 'coffee' ], ->
   gulp.watch './static/**/*.*', ['reload']
   gulp.watch './src/sass/**/*.sass', ['sass']
   gulp.watch './src/coffee/**/*.coffee', ['coffee']
   gulp.watch './views/**/*.jade', ['reload']
   gulp.watch './view-data/**/*.coffee', ['reload']
-  # gulp.watch './readme.md', ['jade']
+  gulp.watch './readme.md', ['reload']
   return livereload.listen
     basePath: './src'
     start: true

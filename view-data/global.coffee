@@ -1,13 +1,11 @@
 module.exports =
   title: 'NASM Connector'
   javascripts: [
-    '/js/jquery/jquery.min.js'
-    '/js/underscore/underscore-min.js'
-    '/js/backbone/backbone-min.js'
-    '/js/script.js'
+    '/nginx/js/jquery/jquery.min.js'
+    '/nginx/js/script.js'
   ]
   stylesheets: [
-    '/css/style.css'
+    '/nginx/css/style.css'
   ]
   navbarBrand:
     title: 'NASM Connector'

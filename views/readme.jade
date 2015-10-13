@@ -3,8 +3,4 @@ extends ./layout/layout.jade
 block content
   .row
     .col-md-12
-      h1 Facebook -> Acton Connector
-      a.btn.btn-primary-outline(href='/connect/facebook') Connect Facebook
-      pre=JSON.stringify( facebook, null, 2 )
-      a.btn.btn-success-outline(href='/connect/acton') Connect ActOn
-      pre=JSON.stringify( acton, null, 2 )
+      include:markdown-it ../readme.md
