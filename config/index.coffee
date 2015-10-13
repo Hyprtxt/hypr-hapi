@@ -37,6 +37,9 @@ store = new Confidence.Store
     # view serving
       register: require 'vision'
     ,
+    # jade helper
+      register: require '../plugins/jade'
+    ,
     # cookie jar
       register: require 'yar'
       options:

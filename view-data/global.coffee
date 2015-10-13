@@ -1,5 +1,5 @@
 module.exports =
-  title: 'Hyprtxt Static'
+  title: 'NASM Connector'
   javascripts: [
     '/js/jquery/jquery.min.js'
     '/js/underscore/underscore-min.js'
@@ -10,14 +10,11 @@ module.exports =
     '/css/style.css'
   ]
   navbarBrand:
-    title: 'Hyprtxt Static'
+    title: 'NASM Connector'
     link: '/'
   navigation: [
     title: 'Readme'
-    link: '/readme.html'
-  ,
-    title: 'Add Beer'
-    link: '/add.html'
+    link: '/readme'
   ]
   env: process.env.NODE_ENV
   # JSON.stringify( process.env, null, 2 )

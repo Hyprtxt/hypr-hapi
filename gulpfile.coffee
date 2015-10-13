@@ -70,44 +70,44 @@ gulp.task 'watch', [ 'copyfont', 'copycss', 'sass', 'copymap', 'copyjs', 'coffee
   gulp.watch './static/**/*.*', ['reload']
   gulp.watch './src/sass/**/*.sass', ['sass']
   gulp.watch './src/coffee/**/*.coffee', ['coffee']
-  gulp.watch './views/**/*.jade', ['jade']
-  gulp.watch './view-data/**/*.coffee', ['jade']
-  gulp.watch './readme.md', ['jade']
+  gulp.watch './views/**/*.jade', ['reload']
+  gulp.watch './view-data/**/*.coffee', ['reload']
+  # gulp.watch './readme.md', ['jade']
   return livereload.listen
     basePath: './src'
     start: true
 
 # static site stuff
-jade = require 'gulp-jade'
-fs = require 'fs'
-coffeeScript = require 'coffee-script'
-
-jadeData = {}
-gulp.task 'setupJadeData', ( next ) ->
-  fs.readFile './view-data/global.coffee', 'utf8', ( err, _data ) ->
-    if err
-      throw err
-    else
-      coffeeopts =
-        bare: true
-        header: false
-      jadeData = eval coffeeScript.compile _data, coffeeopts
-    return next()
-
-gulp.task 'jade', [ 'setupJadeData' ], ->
-  return gulp.src [ './views/**/*.jade', '!./views/layout/**' ]
-    .pipe jade
-      locals: jadeData
-      pretty: true
-    .pipe gulp.dest dest
-    .pipe livereload()
-
-gulp.task 'copystatic', ->
-  return gulp.src [ './static/**', dest + '/**' ]
-    .pipe gulp.dest dest
-
-gulp.task 'render', [ 'copystatic', 'jade', 'copyfont', 'copycss', 'sass', 'copyjs', 'coffee' ], ( cb ) ->
-  return rimraf dest + '/map', cb
-
-gulp.task 'build', [ 'clean' ], ->
-  return gulp.start 'render'
+# jade = require 'gulp-jade'
+# fs = require 'fs'
+# coffeeScript = require 'coffee-script'
+#
+# jadeData = {}
+# gulp.task 'setupJadeData', ( next ) ->
+#   fs.readFile './view-data/global.coffee', 'utf8', ( err, _data ) ->
+#     if err
+#       throw err
+#     else
+#       coffeeopts =
+#         bare: true
+#         header: false
+#       jadeData = eval coffeeScript.compile _data, coffeeopts
+#     return next()
+#
+# gulp.task 'jade', [ 'setupJadeData' ], ->
+#   return gulp.src [ './views/**/*.jade', '!./views/layout/**' ]
+#     .pipe jade
+#       locals: jadeData
+#       pretty: true
+#     .pipe gulp.dest dest
+#     .pipe livereload()
+#
+# gulp.task 'copystatic', ->
+#   return gulp.src [ './static/**', dest + '/**' ]
+#     .pipe gulp.dest dest
+#
+# gulp.task 'render', [ 'copystatic', 'jade', 'copyfont', 'copycss', 'sass', 'copyjs', 'coffee' ], ( cb ) ->
+#   return rimraf dest + '/map', cb
+#
+# gulp.task 'build', [ 'clean' ], ->
+#   return gulp.start 'render'
