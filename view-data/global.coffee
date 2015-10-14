@@ -13,6 +13,12 @@ module.exports =
   navigation: [
     title: 'Readme'
     link: '/readme'
+  ,
+    title: 'FB Subscriptions'
+    link: '/facebook/subscriptions'
+  ,
+    title: 'Acton Lists'
+    link: '/acton/lists'
   ]
   env: process.env.NODE_ENV
   # JSON.stringify( process.env, null, 2 )

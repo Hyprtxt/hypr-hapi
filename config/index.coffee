@@ -6,6 +6,14 @@ grant = new Grant()
 
 store = new Confidence.Store
 
+  server:
+    cache:
+      name: 'redis'
+      engine: require 'catbox-redis'
+      host: 'pub-redis-16865.us-east-1-4.6.ec2.redislabs.com'
+      port: 16865
+      password: '7DB.syK7JXktkUbrK[fm'
+
   connection:
     $filter: 'env'
     production:

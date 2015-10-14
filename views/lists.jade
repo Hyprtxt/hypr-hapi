@@ -1,0 +1,13 @@
+extends ./layout/layout.jade
+
+block content
+  .row
+    .col-md-12
+      h1 Acton Lists
+      time=parseInt( Date.now() / 1000 )
+      ul
+        each list in lists.result
+          li 
+            code #{list.id}
+            |  - #{list.name}: #{list.sourceSize}
+      pre=JSON.stringify( lists, null, 2 )

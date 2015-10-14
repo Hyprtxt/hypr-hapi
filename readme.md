@@ -1,5 +1,7 @@
 # Facebook Lead Gen -> Acton
 
+Redis Password: 7DB.syK7JXktkUbrK[fm
+
 Tunnel local site to internet with SSL `ssh -R 8080:localhost:8100 ht`
 
 * User must accept: [Leadgen TOS](https://www.facebook.com/ads/leadgen/tos)
@@ -36,7 +38,9 @@ https://graph.facebook.com/oauth/access_token
 
 ### Setup Callback Subscription
 
-https://developers.facebook.com/docs/graph-api/reference/v2.5/app/subscriptions
+[https://developers.facebook.com/docs/graph-api/reference/v2.5/app/subscriptions](https://developers.facebook.com/docs/graph-api/reference/v2.5/app/subscriptions)
+
+Leadgen
 
 ```
 curl -X POST \
@@ -48,19 +52,27 @@ curl -X POST \
 https://graph.facebook.com/v2.5/1513710378927269/subscriptions
 ```
 
-### Read Subscriptions
+Feed
 
 ```
-curl \
+curl -X POST \
 -F "object=page" \
 -F "callback_url=https://tunnel.hyprtxt.com/realtime" \
--F "fields=leadgen" \
+-F "fields=feed" \
 -F "access_token=1513710378927269|ekxRolnHjwt8BzUxKpOwOVthWJ0" \
 -F "verify_token=verify1234" \
 https://graph.facebook.com/v2.5/1513710378927269/subscriptions
 ```
 
+### Read Subscriptions
+
+```
+curl -i -X GET \
+"https://graph.facebook.com/v2.5/subscriptions?access_token=1513710378927269%7CekxRolnHjwt8BzUxKpOwOVthWJ0"
+```
+
 ### Delete Subscriptions
+
 ```
 curl -X DELETE \
 -F "object=page" \
@@ -69,6 +81,7 @@ https://graph.facebook.com/v2.5/1513710378927269/subscriptions
 ```
 
 ### Send Test Data
+
 ```
 curl -X POST \
 -F "object=page" \
@@ -167,7 +180,9 @@ curl -X POST \
 -H "Cache-Control: no-cache" \
 -d '{"Email":"taylor.young@ascendlearning.com","First Name":"Taylor","Last Name":"Young"}' \
 https://restapi.actonsoftware.com/api/1/list/l-0086/record
+```
 
+```
 curl -X POST \
 -H "Authorization: Bearer 9ecc7166817e54eab9ddc749f037ff2c" \
 -H "Content-Type: application/json" \
@@ -175,7 +190,10 @@ curl -X POST \
 -d '{"Email":"taylor.young@ascendlearning.com","Name":"Taylor Young","First Name":"Taylor","Last Name":"Young"}' \
 https://restapi.actonsoftware.com/api/1/list/l-dyn-lead-004b/record
 ```
+
+```
 curl -X POST -H "Authorization: Bearer d46940913759bf58f4c1778ed54e43" -H "Content-Type: application/json" -H "Cache-Control: no-cache" -d '{"Email":"john.doe@somedomain.com","Test1":"John","Test2":"Doe"}' https://restapi.actonsoftware.com/api/1/list/l-0003/record
+```
 
 ## Interesting TLDs
 
