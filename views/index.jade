@@ -4,7 +4,11 @@ block content
   .row
     .col-md-12
       h1 Facebook -> Acton Connector
-      a.btn.btn-primary-outline(href='/connect/facebook') Connect Facebook
+      a.btn.btn-primary-outline(href='#') Facebook App Auth
+      pre=JSON.stringify( fb, null, 2 )
+      a.btn.btn-primary-outline(href='/connect/facebook') Connect Facebook User
       pre=JSON.stringify( facebook, null, 2 )
-      a.btn.btn-success-outline(href='/connect/acton') Connect ActOn
+      a.btn.btn-primary-outline(href='#') Act On App Auth
+      pre=JSON.stringify( act, null, 2 )
+      a.btn.btn-success-outline(href='/connect/acton') Connect Act On User
       pre=JSON.stringify( acton, null, 2 )

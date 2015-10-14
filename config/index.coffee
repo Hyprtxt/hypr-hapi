@@ -1,6 +1,6 @@
 Confidence = require 'confidence'
 Path = require 'path'
-#
+
 Grant = require('grant').hapi()
 grant = new Grant()
 
@@ -8,11 +8,20 @@ store = new Confidence.Store
 
   server:
     cache:
-      name: 'redis'
       engine: require 'catbox-redis'
       host: 'pub-redis-16865.us-east-1-4.6.ec2.redislabs.com'
       port: 16865
       password: '7DB.syK7JXktkUbrK[fm'
+
+  facebook:
+    client_id: '1513710378927269'
+    client_secret: 'b7741bad6244c28f34d6bdc2e9116def'
+
+  acton:
+    username: 'taylor@hyprtxt.com'
+    password: 'welcome'
+    client_id: 'Drqi8At9LgrlHQUP4S6a6rEJrDIa'
+    client_secret: '_TifPts48nGDvcqZgXvQ6cY63Swa'
 
   connection:
     $filter: 'env'
@@ -83,9 +92,6 @@ store = new Confidence.Store
           scope: [ 'public_profile', 'ads_read', 'manage_pages', 'user_website', 'user_status' ]
           callback: '/facebook/callback'
     ,
-    # # jade helper
-    #   register: require '../plugins/jade'
-    # ,
     # event logging
       register: require 'good'
       options:

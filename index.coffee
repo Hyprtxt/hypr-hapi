@@ -1,47 +1,6 @@
 Hapi = require 'hapi'
 Request = require 'request'
 
-fb =
-  client_id: '1513710378927269'
-  client_secret: 'b7741bad6244c28f34d6bdc2e9116def'
-data =
-  client_id: fb.client_id
-  client_secret: fb.client_secret
-  grant_type: 'client_credentials'
-opts =
-  url: '/oauth/access_token'
-  baseUrl: 'https://graph.facebook.com'
-  method: 'POST'
-  formData: data
-  json: true
-
-Request opts, ( err, resp, body ) ->
-  fb.access_token = body.replace 'access_token=', ''
-  console.log 'FB', fb
-  setupSubscription()
-  return
-
-setupSubscription = ->
-  data =
-    object: 'page'
-    callback_url: 'https://tunnel.hyprtxt.com/realtime'
-    fields: 'leadgen'
-    access_token: fb.access_token
-    verify_token: 'verify1234'
-  opts =
-    url: '/v2.5/' + fb.client_id + '/subscriptions'
-    baseUrl: 'https://graph.facebook.com'
-    method: 'POST'
-    formData: data
-    json: true
-  Request opts, ( err, resp, body ) ->
-    if body.success is true
-      console.log 'subscription callback setup success'
-    else
-      console.log 'subscription setup failure', body
-    return
-
-
 config = require './config'
 
 server = new Hapi.Server config.get '/server'
@@ -55,6 +14,85 @@ server.register config.get('/plugin'), ( err ) ->
 
 server.views config.get '/view'
 
+getFacebookAccessToken = ( next ) ->
+  console.log 'Getting FaceBook Access Token'
+  fbConfig = config.get '/facebook'
+  opts =
+    method: 'POST'
+    baseUrl: 'https://graph.facebook.com'
+    url: '/oauth/access_token'
+    json: true
+    formData:
+      client_id: fbConfig.client_id
+      client_secret: fbConfig.client_secret
+      grant_type: 'client_credentials'
+  Request opts, ( err, resp, body ) ->
+    if !err && resp.statusCode is 200
+      fbConfig.access_token = body.replace 'access_token=', ''
+      return next null, fbConfig
+
+server.method 'facebook_token', getFacebookAccessToken,
+  cache:
+    expiresIn: 3000 * 1000
+    generateTimeout: 1000
+
+getActOnAccessToken = ( next ) ->
+  console.log 'Getting ActOn Access Token'
+  actConfig = config.get '/acton'
+  actConfig.grant_type = 'password'
+  opts =
+    method: 'POST'
+    baseUrl: 'https://graph.facebook.com'
+    url: '/oauth/access_token'
+    json: true
+    formData: actConfig
+  Request opts, ( err, resp, body ) ->
+    if !err && resp.statusCode is 200
+      console.log body
+      return next null, body
+
+server.method 'acton_token', getActOnAccessToken,
+  cache:
+    expiresIn: 3500 * 1000
+    generateTimeout: 1000
+
+# setupActon = ->
+#   server.methods.acton_token ( err, acton ) ->
+#     return
+
+setupFacebookSubscriptionCallback = ->
+  server.methods.facebook_token ( err, fb ) ->
+    opts =
+      url: '/v2.5/' + fb.client_id + '/subscriptions'
+      baseUrl: 'https://graph.facebook.com'
+      method: 'POST'
+      json: true
+      formData:
+        object: 'page'
+        callback_url: 'https://tunnel.hyprtxt.com/realtime'
+        fields: 'leadgen'
+        access_token: fb.access_token
+        verify_token: 'verify1234'
+    Request opts, ( err, resp, body ) ->
+      if body.success is true
+        console.log 'subscription callback setup success'
+      else
+        console.log 'subscription setup failure', body
+      return
+
+setupFacebookSubscriptionCallback()
+
+server.route
+  method: 'GET'
+  path: '/cache'
+  config:
+    pre: [ server.plugins['jade'].global ]
+    handler: ( request, reply ) ->
+      server.methods.facebook_token ( err, fb ) ->
+        request.pre.cache = fb
+        return reply.view 'cache', request.pre
+      return
+
 server.route
   method: 'GET'
   path: '/'
@@ -63,7 +101,11 @@ server.route
     handler: ( request, reply ) ->
       request.pre.facebook = request.session.get 'facebook'
       request.pre.acton = request.session.get 'acton'
-      return reply.view 'index', request.pre
+      return server.methods.facebook_token ( err, act ) ->
+        request.pre.act = act
+        return server.methods.facebook_token ( err, fb ) ->
+          request.pre.fb = fb
+          return reply.view 'index', request.pre
 
 server.route
   method: 'GET'
@@ -81,16 +123,17 @@ server.route
       server.plugins['jade'].global
     ]
     handler: ( request, reply ) ->
-      opts =
-        baseUrl: 'https://graph.facebook.com'
-        url: '/v2.5/subscriptions'
-        qs:
-          access_token: fb.access_token
-        method: 'GET'
-        json: true
-      return Request opts, ( err, resp, body ) ->
-        request.pre.subs = body.data
-        return reply.view 'subscriptions', request.pre
+      return server.methods.facebook_token ( err, fb ) ->
+        opts =
+          method: 'GET'
+          json: true
+          baseUrl: 'https://graph.facebook.com'
+          url: '/v2.5/subscriptions'
+          qs:
+            access_token: fb.access_token
+        return Request opts, ( err, resp, body ) ->
+          request.pre.subs = body.data
+          return reply.view 'subscriptions', request.pre
 
 server.route
   method: 'GET'
