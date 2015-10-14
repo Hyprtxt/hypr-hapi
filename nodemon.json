@@ -7,7 +7,6 @@
     "src",
     "static",
     "static_generated",
-    "view-data",
     "bower.json",
     "gulpfile.coffee",
     "license.txt",
