@@ -42,14 +42,14 @@ getActOnAccessToken = ( next ) ->
   actConfig.grant_type = 'password'
   opts =
     method: 'POST'
-    baseUrl: 'https://graph.facebook.com'
-    url: '/oauth/access_token'
+    baseUrl: 'https://restapi.actonsoftware.com'
+    url: '/token'
     json: true
-    formData: actConfig
   Request opts, ( err, resp, body ) ->
     if !err && resp.statusCode is 200
-      console.log body
       return next null, body
+    else
+      console.log err, resp.statusCode, body
 
 server.method 'acton_token', getActOnAccessToken,
   cache:
@@ -97,15 +97,15 @@ server.route
   method: 'GET'
   path: '/'
   config:
-    pre: [ server.plugins['jade'].global ]
+    pre: [
+      server.plugins['jade'].global
+      server.plugins['jade'].facebook
+      server.plugins['jade'].acton
+    ]
     handler: ( request, reply ) ->
       request.pre.facebook = request.session.get 'facebook'
       request.pre.acton = request.session.get 'acton'
-      return server.methods.facebook_token ( err, act ) ->
-        request.pre.act = act
-        return server.methods.facebook_token ( err, fb ) ->
-          request.pre.fb = fb
-          return reply.view 'index', request.pre
+      return reply.view 'index', request.pre
 
 server.route
   method: 'GET'
@@ -144,18 +144,15 @@ server.route
       server.plugins['jade'].acton
     ]
     handler: ( request, reply ) ->
-      if request.pre.acton is undefined
-        return reply 'Auth with Act-On first'
-      else
-        opts =
-          url: '/api/1/list'
-          baseUrl: 'https://restapi.actonsoftware.com'
-          method: 'GET'
-          json: true
-        return Request opts, ( err, resp, body ) ->
-          request.pre.lists = body
-          return reply.view 'lists', request.pre
-        .auth null, null, true, request.pre.acton.access_token
+      opts =
+        url: '/api/1/list'
+        baseUrl: 'https://restapi.actonsoftware.com'
+        method: 'GET'
+        json: true
+      return Request opts, ( err, resp, body ) ->
+        request.pre.lists = body
+        return reply.view 'lists', request.pre
+      .auth null, null, true, request.pre.act.access_token
 
 server.route
   method: 'GET'
@@ -195,12 +192,11 @@ server.route
     payload:
       output: 'data'
     handler: ( request, reply ) ->
+      request.log [ 'ping', 'facebook', 'realtime' ], request.payload
       console.log 'Recieved PING~'
-      console.log ''
       console.log request.payload
-      console.log ''
       console.log '~PING'
       return reply()
 
 server.start ->
-  return console.log 'Server started at: ', server.info.uri
+  return console.info 'Server started at: ', server.info.uri

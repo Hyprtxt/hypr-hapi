@@ -14,6 +14,19 @@ Tunnel local site to internet with SSL `ssh -R 8080:localhost:8100 ht`
 1. Auto Update from Real FB Data, check that subscription is working.
 1. Deploy!
 
+```
+NASM Page Access Token: CAACEdEose0cBAG2UdMv6YnR93J7cBaWYoqktpODmsKg0BDhRb5tcsXHxTQwZBHZBp3xTgMID4yfRz0tOHZC8UAGb6BKjj2GlZCbW60riZBC2ZBWlAZBGLYT0yCYhaiMZB2mo6nZCwra83s3Qa38tPlZCWJEvX9uPPL10yKrDeZBC8alcZCi3gAuejmvUGO1X64ol9ZAf56xDHZBXni9QZDZD
+```
+
+
+
+
+```
+curl \
+-F "access_token=" \
+"https://graph.facebook.com/v2.5/50318073949/subscribed_apps"
+```
+
 ## Notes
 
 * AD ID - 6030653854460
@@ -23,6 +36,10 @@ Tunnel local site to internet with SSL `ssh -R 8080:localhost:8100 ht`
 * NASM Page ID - 50318073949
 
 # Facebook Stuff
+
+* [Realtime Client Examples](https://github.com/fbsamples/real-time-updates-samples)
+* [Subscriptions Graph API Docs](https://developers.facebook.com/docs/graph-api/reference/v2.5/app/subscriptions)
+
 
 ### Get App Access Token
 
@@ -38,7 +55,6 @@ https://graph.facebook.com/oauth/access_token
 
 ### Setup Callback Subscription
 
-[https://developers.facebook.com/docs/graph-api/reference/v2.5/app/subscriptions](https://developers.facebook.com/docs/graph-api/reference/v2.5/app/subscriptions)
 
 Leadgen
 
@@ -52,7 +68,7 @@ curl -X POST \
 https://graph.facebook.com/v2.5/1513710378927269/subscriptions
 ```
 
-Feed
+Feed - Page activity, just trying to get some realtime pings going.
 
 ```
 curl -X POST \
