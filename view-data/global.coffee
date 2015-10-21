@@ -14,8 +14,8 @@ module.exports =
     title: 'Readme'
     link: '/readme'
   ,
-    title: 'FB Subscriptions'
-    link: '/facebook/subscriptions'
+    title: 'FB Leadgen Forms'
+    link: '/facebook/leadgen_forms'
   ,
     title: 'Acton Lists'
     link: '/acton/lists'

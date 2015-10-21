@@ -5,6 +5,8 @@ config = require './config'
 
 server = new Hapi.Server config.get '/server'
 
+fbPageId = '50318073949'
+
 server.connection config.get '/connection'
 
 server.register config.get('/plugin'), ( err ) ->
@@ -117,23 +119,94 @@ server.route
 
 server.route
   method: 'GET'
-  path: '/facebook/subscriptions'
+  path: '/facebook/leadgen_forms'
   config:
     pre: [
       server.plugins['jade'].global
     ]
     handler: ( request, reply ) ->
-      return server.methods.facebook_token ( err, fb ) ->
-        opts =
-          method: 'GET'
-          json: true
-          baseUrl: 'https://graph.facebook.com'
-          url: '/v2.5/subscriptions'
-          qs:
-            access_token: fb.access_token
-        return Request opts, ( err, resp, body ) ->
-          request.pre.subs = body.data
-          return reply.view 'subscriptions', request.pre
+      opts =
+        method: 'GET'
+        json: true
+        baseUrl: 'https://graph.facebook.com'
+        url: '/v2.5/' + fbPageId + '/leadgen_forms'
+        qs:
+          access_token: request.session.get('facebook').access_token
+      return Request opts, ( err, resp, body ) ->
+        console.log body
+        request.pre.forms = body.data
+        return reply.view 'forms', request.pre
+
+server.route
+  method: 'GET'
+  path: '/import/{formid}'
+  config:
+    pre: [
+      server.plugins['jade'].global
+    ]
+    handler: ( request, reply ) ->
+      opts =
+        method: 'GET'
+        json: true
+        baseUrl: 'https://www.facebook.com'
+        url: '/ads/leadgen/export_csv'
+        qs:
+          id: request.params.formid
+          type: 'form'
+      return Request opts, ( err, resp, body ) ->
+        console.log body
+        # request.pre.forms = body.data
+        return reply.view 'forms', request.pre
+
+server.route
+  method: 'GET'
+  path: '/facebook/{formid}/leads/{paging?}'
+  config:
+    pre: [
+      server.plugins['jade'].global
+    ]
+    handler: ( request, reply ) ->
+      opts =
+        method: 'GET'
+        json: true
+        baseUrl: 'https://graph.facebook.com'
+        url: '/v2.5/' + request.params.formid + '/leads'
+        qs:
+          access_token: request.session.get('facebook').access_token
+          limit: 25
+      paging = request.session.get 'paging'
+      if request.params.paging is 'next'
+        opts.qs.after = paging.cursors.after
+      if request.params.paging is 'prev'
+        opts.qs.before = paging.cursors.before
+      console.log opts.qs
+      return Request opts, ( err, resp, body ) ->
+        # console.log body
+        request.pre.leads = body.data
+        request.pre.paging = body.paging
+        request.session.set 'paging', body.paging
+        return reply.view 'leads', request.pre
+
+
+# server.route
+#   method: 'GET'
+#   path: '/facebook/leads/{formid}'
+#   config:
+#     pre: [
+#       server.plugins['jade'].global
+#     ]
+#     handler: ( request, reply ) ->
+#       opts =
+#         method: 'GET'
+#         json: true
+#         baseUrl: 'https://graph.facebook.com'
+#         url: '/v2.5/' + fbPageId + '/leadgen_forms'
+#         qs:
+#           access_token: request.session.get('facebook').access_token
+#       return Request opts, ( err, resp, body ) ->
+#         console.log body
+#         request.pre.forms = body.data
+#         return reply.view 'forms', request.pre
 
 server.route
   method: 'GET'

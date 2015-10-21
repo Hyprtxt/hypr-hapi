@@ -1,0 +1,20 @@
+extends ./layout/layout.jade
+
+block content
+  .row
+    .col-md-12
+      h1 Facebook Leadgen Form Leads
+      +pagination
+      each lead, i in leads
+        h4=i+1 + ' ' + lead.id + ' - ' + lead.created_time
+        pre=JSON.stringify( lead, null, 2 )
+      +pagination
+
+mixin pagination
+  if paging
+    if paging.previous
+      a(href='/facebook/490331977815219/leads/prev') Previous
+    if paging.next
+      a.pull-right(href='/facebook/490331977815219/leads/next') Next
+    .clearfix
+    //- pre=JSON.stringify( paging, null, 2 )
