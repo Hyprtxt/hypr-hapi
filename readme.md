@@ -158,19 +158,31 @@ Facebook Empty Test List: `l-0068` (Does not work, not setup, just a folder???)
 
 Taylor's Test List: `l-0086`
 
+### Acton Get access token
+
+```
+curl -X POST \
+-H "Cache-Control: no-cache" \
+-H "Content-Type: application/x-www-form-urlencoded" \
+-d 'grant_type=password&username=taylor@hyprtxt.com&password=welcome&client_id=Drqi8At9LgrlHQUP4S6a6rEJrDIa&client_secret=_TifPts48nGDvcqZgXvQ6cY63Swa' \
+'https://restapi.actonsoftware.com/token'
+```
+
+
 ### Acton Get List of Lists
 
 ```
 curl -X GET \
--H "Authorization: Bearer 1321794d98e6725e656b9b6fc3e2fd3" \
+-H "Authorization: Bearer 37ccba419d2416a291aed72446472" \
 -H "Cache-Control: no-cache" \
 https://restapi.actonsoftware.com/api/1/list?listingtype=CONTACT_LIST
 ```
+
 ### Acton Download List
 
 ```
 curl -X GET \
--H "Authorization: Bearer 1321794d98e6725e656b9b6fc3e2fd3" \
+-H "Authorization: Bearer 37ccba419d2416a291aed72446472" \
 -H "Cache-Control: no-cache" \
 https://restapi.actonsoftware.com/api/1/list/l-0086
 ```
@@ -181,7 +193,7 @@ Upload a file? This is cray cray...
 
 ```
 curl -X PUT
--H "Authorization: Bearer 1321794d98e6725e656b9b6fc3e2fd3" \
+-H "Authorization: Bearer 37ccba419d2416a291aed72446472" \
 -H "Cache-Control: no-cache" \
 -H "Content-Type: multipart/form-data" \
 -F "listname=InvitationTokens" \
@@ -198,9 +210,11 @@ https://restapi.actonsoftware.com/api/1/list/l-08fd
 
 ### Acton Add Contact
 
+Don't do this, use Upsert to prevent duplication
+
 ```
 curl -X POST \
--H "Authorization: Bearer 1321794d98e6725e656b9b6fc3e2fd3" \
+-H "Authorization: Bearer 37ccba419d2416a291aed72446472" \
 -H "Content-Type: application/json" \
 -H "Cache-Control: no-cache" \
 -d '{"Email":"taylor.young@ascendlearning.com","First Name":"Taylor","Last Name":"Young"}' \
@@ -209,7 +223,7 @@ https://restapi.actonsoftware.com/api/1/list/l-0086/record
 
 ```
 curl -X POST \
--H "Authorization: Bearer 1321794d98e6725e656b9b6fc3e2fd3" \
+-H "Authorization: Bearer 37ccba419d2416a291aed72446472" \
 -H "Content-Type: application/json" \
 -H "Cache-Control: no-cache" \
 -d '{"Email":"taylor.young@ascendlearning.com","Name":"Taylor Young","First Name":"Taylor","Last Name":"Young"}' \
@@ -218,6 +232,27 @@ https://restapi.actonsoftware.com/api/1/list/l-dyn-lead-004b/record
 
 ```
 curl -X POST -H "Authorization: Bearer d46940913759bf58f4c1778ed54e43" -H "Content-Type: application/json" -H "Cache-Control: no-cache" -d '{"Email":"john.doe@somedomain.com","Test1":"John","Test2":"Doe"}' https://restapi.actonsoftware.com/api/1/list/l-0003/record
+```
+
+### Upsert a Contact
+
+```
+curl -X PUT \
+-H "Authorization: Bearer 37ccba419d2416a291aed72446472" \
+-H "Content-Type: application/json" \
+-H "Cache-Control: no-cache" \
+-d '{"Name":"Do Test","Name":"Taylor Young","Topic":"Facebook"}' \
+"https://restapi.actonsoftware.com/api/1/list/l-0086/record?email=taylor.young@msn.com"
+```
+
+Example with good data formatting
+```
+curl -X PUT \
+-H "Authorization: Bearer b92f407d9adef3a14a813d2b4217569b" \
+-H "Content-Type: application/json" \
+-H "Cache-Control: no-cache" \
+-d '{ "Created On": "2015-10-09T23:11:56+0000", "Topic": "Facebook", "Name": "Jay Gonzalez", "Email": "Johng8247@yahoo.com" }' \
+"https://restapi.actonsoftware.com/api/1/list/l-0086/record?email=Johng8247@yahoo.com"
 ```
 
 ## Interesting TLDs

@@ -18,8 +18,10 @@ store = new Confidence.Store
     client_secret: 'b7741bad6244c28f34d6bdc2e9116def'
 
   acton:
-    username: 'taylor@hyprtxt.com'
-    password: 'welcome'
+    username: 'taylor.young@ascendlearning.com'
+    password: 'Dg}E2rHgPizybfsZ4dT>'
+    # username: 'taylor@hyprtxt.com'
+    # password: 'welcome'
     client_id: 'Drqi8At9LgrlHQUP4S6a6rEJrDIa'
     client_secret: '_TifPts48nGDvcqZgXvQ6cY63Swa'
 
@@ -56,6 +58,15 @@ store = new Confidence.Store
     ,
     # jade helper
       register: require '../plugins/jade'
+    ,
+    # facebook helper
+      register: require '../plugins/facebook'
+    ,
+    # # database
+    #   register: require '../plugins/mysql'
+    # ,
+      # sockets
+      register: require '../plugins/sockets'
     ,
     # cookie jar
       register: require 'yar'

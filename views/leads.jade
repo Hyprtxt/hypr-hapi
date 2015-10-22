@@ -5,16 +5,36 @@ block content
     .col-md-12
       h1 Facebook Leadgen Form Leads
       +pagination
-      each lead, i in leads
-        h4=i+1 + ' ' + lead.id + ' - ' + lead.created_time
-        pre=JSON.stringify( lead, null, 2 )
+    each lead, i in leads
+      .col-md-6
+        h4=i+1
+        table.table.table-bordered.table-sm
+          tbody
+            each data in lead.field_data
+              tr 
+                td
+                  kbd #{data.name}
+                td #{data.values[0]}
+            tr
+              td
+                kbd created_time
+              td lead.created_time
+            tr
+              td
+                kbd id
+              td lead.id
+            tr
+              td(colspan=2)
+                button.btn.btn-primary-outline.pull-right Upsert
+        //- pre=JSON.stringify( lead, null, 2 )
+    .col-md-12
       +pagination
 
 mixin pagination
   if paging
     if paging.previous
-      a(href='/facebook/490331977815219/leads/prev') Previous
+      a(href='/fb/490331977815219/leads/prev') Previous
     if paging.next
-      a.pull-right(href='/facebook/490331977815219/leads/next') Next
+      a.pull-right(href='/fb/490331977815219/leads/next') Next
     .clearfix
-    //- pre=JSON.stringify( paging, null, 2 )
+    pre=JSON.stringify( paging, null, 2 )
