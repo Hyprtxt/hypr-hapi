@@ -25,6 +25,8 @@ gulp.task 'copystatic', ->
 gulp.task 'copyjs', ->
   gulp.src './bower_components/bootstrap/js/dist/*'
     .pipe gulp.dest dest + '/js/bootstrap'
+  gulp.src './bower_components/messenger/build/js/*'
+    .pipe gulp.dest dest + '/js/messenger'
   return gulp.src './bower_components/jquery/dist/*'
     .pipe gulp.dest dest + '/js/jquery'
 
@@ -35,6 +37,8 @@ gulp.task 'copymap', ->
     .pipe gulp.dest dest + '/js/backbone'
 
 gulp.task 'copycss', ->
+  gulp.src './bower_components/messenger/build/css/*'
+    .pipe gulp.dest dest + '/css/messenger'
   return
 
 gulp.task 'copyfont', ->

@@ -2,6 +2,7 @@
   "verbose": false,
   "watch": [
     "index.coffee",
+    "view-data/",
     "views/",
     "config/",
     "plugins/"

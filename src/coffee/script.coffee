@@ -1,15 +1,25 @@
-console.log 'script loaded'
+Messenger.options =
+  extraClasses: 'messenger-fixed messenger-on-top'
+  theme: 'air'
+  showCloseButton: true
 
 socket = io '/'
 
 socket
-  .on 'connect', (  ) ->
-    console.log 'connected, ID:' + socket.io.engine.id
-    return socket.emit 'link', { data: 'good' }
-  .on 'link_complete', ->
-    return console.log 'link_complete'
+  .on 'connect', ->
+    Messenger().post
+      message: 'Realtime messaging connected with ID: ' + socket.io.engine.id
+      type: 'success'
+    socket.emit 'link', { data: 'good' }
+    return null
+  .on 'message', ( data ) ->
+    Messenger().post data
+    return null
   .on 'disconnect', ->
-    console.log 'disconnected'
-    return setTimeout ->
+    Messenger().post
+      message: 'I lost contact with the server, something\'s gone horribly wrong'
+      type: 'error'
+    setTimeout ->
       window.location = '/'
     , 3000
+    return null
