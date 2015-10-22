@@ -5,3 +5,4 @@ config/secret.coffee
 config/index.coffee
 static_generated
 log
+logs
