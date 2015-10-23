@@ -70,12 +70,17 @@ gulp.task 'coffee', ->
 gulp.task 'reload', ->
   return livereload.reload()
 
+gulp.task 'waitreload', ->
+  return setTimeout ->
+    return livereload.reload()
+  , 5000
+
 gulp.task 'watch', [ 'copystatic', 'copyfont', 'copycss', 'sass', 'copymap', 'copyjs', 'coffee' ], ->
   gulp.watch './static/**/*.*', ['reload']
   gulp.watch './src/sass/**/*.sass', ['sass']
   gulp.watch './src/coffee/**/*.coffee', ['coffee']
   gulp.watch './views/**/*.jade', ['reload']
-  gulp.watch './view-data/**/*.coffee', ['reload']
+  gulp.watch './view-data/**/*.coffee', ['waitreload']
   gulp.watch './readme.md', ['reload']
   return livereload.listen
     basePath: './src'

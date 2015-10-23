@@ -10,7 +10,10 @@ html
           ul.nav.navbar-nav
             each nav in navigation
               li.nav-item
-                a.nav-link(href=nav.link) #{nav.title}
+                - if ( nav.class ) {
+                -   nav.class.push('nav-link');
+                - }
+                a(href=nav.link, id=nav.id, class=nav.class) #{nav.title}
         
     .container
       block content

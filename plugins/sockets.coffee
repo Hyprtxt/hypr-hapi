@@ -7,12 +7,16 @@ exports.register = ( server, options, next ) ->
     return next();
 
   io.on 'connection', ( socket ) ->
-    socket.emit 'message',
-      message: 'server messages present'
-      type: 'success'
     socket
       .on 'disconnect', ->
         console.log socket.id + ' disconnected'
+        return null
+      .on 'halt_export', ( data ) ->
+        server.app.q.kill()
+        server.app.io.sockets.emit 'message',
+          message: 'Lead export halted'
+          type: 'error'
+          hideAfter: false
         return null
     return null
 

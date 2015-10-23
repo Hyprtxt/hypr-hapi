@@ -1,0 +1,10 @@
+extends ./layout/layout.jade
+
+block content
+  .row
+    .col-md-12
+      h1 Message History
+      table.table.table-striped
+        each message in messages
+          tr
+            td=message

@@ -1,5 +1,15 @@
 # Facebook Lead Gen -> Acton
 
+## User Notes
+
+1. Login with facebook
+1. Download leads
+1. Start the export process
+1. Get coffee
+1. Profit
+
+## Developer Notes
+
 Redis Password: 7DB.syK7JXktkUbrK[fm
 
 Tunnel local site to internet with SSL `ssh -R 8080:localhost:8100 ht`

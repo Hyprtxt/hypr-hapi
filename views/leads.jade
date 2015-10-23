@@ -2,12 +2,23 @@ extends ./layout/layout.jade
 
 block content
   .row
-    .col-md-12
+    .col-md-12.m-b
       h1 Facebook Leadgen Form Leads
+    .col-md-12.m-b-lg
+      form
+        p Leads will be exported to Act-On list: 
+          kbd l-dyn-lead-004b
+        .row
+          .col-md-4
+            .form-group
+              label Start export starting from lead #
+              input#leadStart.form-control(type='number', value=0, min=0)
+            button#export.btn.btn-primary-outline Start the Export
+    .col-md-12
       +pagination
     each lead, i in leads
       .col-md-6
-        h4=i+1
+        h4=i
         table.table.table-bordered.table-sm
           tbody
             each data in lead.field_data
@@ -23,7 +34,7 @@ block content
               td
                 kbd id
               td lead.id
-            tr
+            //- tr
               td(colspan=2)
                 button.btn.btn-primary-outline.pull-right Upsert
         //- pre=JSON.stringify( lead, null, 2 )

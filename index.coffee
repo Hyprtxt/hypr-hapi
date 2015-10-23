@@ -130,11 +130,37 @@ server.route
 
 server.route
   method: 'GET'
+  path: '/nasm'
+  config:
+    auth: 'facebook'
+    pre: [
+      server.plugins['jade'].global
+      server.plugins['jade'].facebook
+    ]
+    handler: ( request, reply ) ->
+      opts =
+        method: 'GET'
+        json: true
+        baseUrl: 'https://graph.facebook.com'
+        url: '/v2.5/' + fbPageId + '/leadgen_forms'
+        qs:
+          access_token: request.auth.credentials.facebook.access_token
+      console.log request.auth.credentials.facebook.access_token + ' CREDSSSS'
+      Request opts, ( err, resp, body ) ->
+        console.log body
+        request.pre.forms = body.data
+        reply.view 'forms', request.pre
+        return null
+      return null
+
+server.route
+  method: 'GET'
   path: '/readme'
   config:
     auth: 'facebook'
     pre: [
       server.plugins['jade'].global
+      server.plugins['jade'].facebook
     ]
     handler: ( request, reply ) ->
       server.app.io.sockets.emit 'message',
@@ -149,6 +175,7 @@ server.route
     auth: 'facebook'
     pre: [
       server.plugins['jade'].global
+      server.plugins['jade'].facebook
     ]
     handler: ( request, reply ) ->
       opts =
@@ -165,6 +192,14 @@ server.route
         return null
       return null
 
+server.route
+  method: 'GET'
+  path: '/logout'
+  config:
+    handler: ( request, reply ) ->
+      request.session.reset()
+      return reply.redirect '/'
+
 # _leadData = []
 
 server.route
@@ -179,6 +214,63 @@ server.route
     handler: ( request, reply ) ->
       reply.view 'leads', request.pre
       return null
+
+# Async Queue Setup
+
+server.route
+  method: 'GET'
+  path: '/history'
+  config:
+    auth: 'facebook'
+    pre: [
+      server.plugins['jade'].global
+    ]
+    handler: ( request, reply ) ->
+      server.app.cache.get 'messageCache', ( err, cached ) ->
+        if cached is null
+          cached = []
+        request.pre.messages = cached
+        reply.view 'history', request.pre
+        return null
+      return null
+
+upsertLead = ( data, done ) ->
+  opts =
+    method: 'PUT'
+    url: '/api/1/list/l-dyn-lead-004b/record'
+    baseUrl: 'https://restapi.actonsoftware.com'
+    qs:
+      email: data.leadData.Email
+    json: data.leadData
+  startTime = Date.now()
+  Request opts, ( err, resp, body ) ->
+    console.log resp.statusCode, body
+    theMessage = '#' + data.number + ' ' + body.message + ' for ' + data.leadData.Email + ' code: ' + resp.statusCode
+    server.app.cache.get 'messageCache', ( err, cached ) ->
+      if cached is null
+        cached = []
+      else
+        cached.push theMessage
+      server.app.cache.set 'messageCache', cached, 0, ->
+        server.app.io.sockets.emit 'message',
+          message: theMessage
+          type: 'success'
+        return null
+      return null
+    latency = Date.now() - startTime
+    wait = ( 3000 - latency )
+    if wait > 0
+      timeout = wait
+    else
+      timeout = 0
+    console.log latency, wait
+    setTimeout ->
+      done()
+    , timeout
+    return null
+  .auth null, null, true, data.token
+
+server.app.q = Async.queue upsertLead, 3
 
 server.route
   method: 'GET'
@@ -205,8 +297,7 @@ server.route
           sliceStart = parseInt( request.params.start )
           slice = Array.prototype.slice.call( cached, sliceStart )
           # slice = cached
-          q = Async.queue upsertLead, 1
-          q.drain = ->
+          server.app.q.drain = ->
             server.app.io.sockets.emit 'message',
               message: 'All leads exported' + sliceStart
               type: 'success'
@@ -227,7 +318,8 @@ server.route
             task = {}
             task.leadData = leadData
             task.token = request.pre.act.access_token
-            q.push task, ( err ) ->
+            task.number = ( key + sliceStart )
+            server.app.q.push task, ( err ) ->
               if err
                 throw err
               console.log 'upsert ' + ( key + sliceStart ) + ' was Completed for ' + leadData.Email
@@ -247,25 +339,6 @@ server.route
     #     }
     #     server.plugins['mysql'].query getQuery, ( rows ) ->
     #       user = rows[0]
-
-upsertLead = ( data, done ) ->
-  opts =
-    method: 'PUT'
-    url: '/api/1/list/l-0086/record'
-    baseUrl: 'https://restapi.actonsoftware.com'
-    qs:
-      email: data.leadData.Email
-    json: data.leadData
-  Request opts, ( err, resp, body ) ->
-    console.log resp.statusCode, body
-    server.app.io.sockets.emit 'message',
-      message: resp.statusCode + ' ' + body.message + ' for ' + data.leadData.Email
-      type: 'success'
-    setTimeout ->
-      done()
-    , 3000
-    return null
-  .auth null, null, true, data.token
 
 # getAllLeads = ( array, request, done ) ->
 #   opts =

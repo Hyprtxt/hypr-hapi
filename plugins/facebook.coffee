@@ -18,6 +18,7 @@ exports.register = ( server, options, next ) ->
       url: '/v2.5/' + request.params.formid + '/leads'
       qs:
         access_token: request.auth.credentials.facebook.access_token
+    console.log opts.url
     getLeads array, opts, ( array ) ->
       server.log [ 'lead count' ], array.length
       server.app.io.sockets.emit 'message',
@@ -35,6 +36,7 @@ exports.register = ( server, options, next ) ->
         message: 'Loaded lead page ' + _page + ' from Facebook API'
         type: 'success'
       server.log [ 'lead page request', 'status' ], resp.statusCode
+      # console.log body.data, err, resp.statusCode
       body.data.forEach ( object ) ->
         array.push object
         return null

@@ -1,6 +1,9 @@
 Messenger.options =
-  extraClasses: 'messenger-fixed messenger-on-top'
+  extraClasses: 'messenger-fixed messenger-on-bottom'
   theme: 'air'
+
+$halt = $ '#halt'
+$export = $ '#export'
 
 socket = io '/'
 
@@ -22,5 +25,15 @@ socket
       type: 'error'
     setTimeout ->
       window.location = '/'
-    , 3000
+    , 5000
     return null
+
+$halt.on 'click', ->
+  socket.emit 'halt_export'
+  return null
+
+$export.on 'click', ( e ) ->
+  e.preventDefault()
+  $( 'form' ).slideUp()
+  $.ajax( '/export/' + $( '#leadStart' ).val() )
+  return null

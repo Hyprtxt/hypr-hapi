@@ -4,7 +4,6 @@ block content
   .row
     .col-md-12
       h1 Facebook Leadgen Forms
-      pre=JSON.stringify( forms, null, 2 )
     each form in forms
       .col-sm-4
         .card
@@ -19,4 +18,6 @@ block content
             //- li.list-group-item
             //-   a(href='/import/' + form.id) Import Data
             li.list-group-item
-              a(href='/fb/' + form.id) All Data
+              a(href='/fb/' + form.id) Load Lead Data
+    .col-md-12
+      pre=JSON.stringify( forms, null, 2 )

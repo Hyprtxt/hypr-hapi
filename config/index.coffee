@@ -99,8 +99,8 @@ store = new Confidence.Store
           key: '1513710378927269'
           secret: 'b7741bad6244c28f34d6bdc2e9116def'
           # https://developers.facebook.com/docs/facebook-login/permissions/v2.5
-          # scope: [ 'ads_management' ]
-          scope: [ 'public_profile', 'ads_read', 'manage_pages', 'user_website', 'user_status' ]
+          # scope: [  ]
+          scope: [ 'public_profile', 'ads_management', 'ads_read', 'manage_pages', 'user_website', 'user_status' ]
           callback: '/facebook/callback'
     ,
     # event logging
