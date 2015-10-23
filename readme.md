@@ -19,9 +19,6 @@ Tunnel local site to internet with SSL `ssh -R 8080:localhost:8100 ht`
 NASM Page Access Token: CAACEdEose0cBAG2UdMv6YnR93J7cBaWYoqktpODmsKg0BDhRb5tcsXHxTQwZBHZBp3xTgMID4yfRz0tOHZC8UAGb6BKjj2GlZCbW60riZBC2ZBWlAZBGLYT0yCYhaiMZB2mo6nZCwra83s3Qa38tPlZCWJEvX9uPPL10yKrDeZBC8alcZCi3gAuejmvUGO1X64ol9ZAf56xDHZBXni9QZDZD
 ```
 
-
-
-
 ```
 curl \
 -F "access_token=" \
@@ -168,12 +165,43 @@ curl -X POST \
 'https://restapi.actonsoftware.com/token'
 ```
 
+### Get list data {l-dyn-lead-004b}
+
+```
+curl -X GET \
+-H "Authorization: Bearer e8848de6d4c255432750af9ee318f" \
+-H "Cache-Control: no-cache" \
+https://restapi.actonsoftware.com/api/1/list/l-008d
+```
+
+Offset example
+
+```
+curl -X GET \
+-H "Authorization: Bearer e8848de6d4c255432750af9ee318f" \
+-H "Cache-Control: no-cache" \
+https://restapi.actonsoftware.com/api/1/list/l-008d?offset=1000
+```
+
+### Get Contact Information
+
+```
+curl -X GET \
+-H "Authorization: Bearer e8848de6d4c255432750af9ee318f" \
+-H "Cache-Control: no-cache" \
+https://restapi.actonsoftware.com/api/1/list/l-008d/record/l-008d:38103
+
+curl -X GET \
+-H "Authorization: Bearer e8848de6d4c255432750af9ee318f" \
+-H "Cache-Control: no-cache" \
+https://restapi.actonsoftware.com/api/1/list/l-008d/record/l-008d:38103/facts
+```
 
 ### Acton Get List of Lists
 
 ```
 curl -X GET \
--H "Authorization: Bearer 37ccba419d2416a291aed72446472" \
+-H "Authorization: Bearer e8848de6d4c255432750af9ee318f" \
 -H "Cache-Control: no-cache" \
 https://restapi.actonsoftware.com/api/1/list?listingtype=CONTACT_LIST
 ```
@@ -290,3 +318,11 @@ curl -X PUT \
 * physicalfitness.guide
 * physicalfitness.coach
 * physicalfitness.academy
+
+Gulp Setup on Windows -
+Git
+Source Tree
+Virtual Box
+Ubuntu Server
+Atom
+IIS?

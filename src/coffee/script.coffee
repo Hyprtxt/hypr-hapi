@@ -1,7 +1,6 @@
 Messenger.options =
   extraClasses: 'messenger-fixed messenger-on-top'
   theme: 'air'
-  showCloseButton: true
 
 socket = io '/'
 
@@ -10,9 +9,11 @@ socket
     Messenger().post
       message: 'Realtime messaging connected with ID: ' + socket.io.engine.id
       type: 'success'
+      showCloseButton: true
     socket.emit 'link', { data: 'good' }
     return null
   .on 'message', ( data ) ->
+    data.showCloseButton = true
     Messenger().post data
     return null
   .on 'disconnect', ->

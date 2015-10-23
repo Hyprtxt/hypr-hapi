@@ -7,15 +7,16 @@ exports.register = ( server, options, next ) ->
     return next();
 
   io.on 'connection', ( socket ) ->
+    socket.emit 'message',
+      message: 'server messages present'
+      type: 'success'
     socket
-      .on 'link', ( data ) ->
-        console.log data
-        socket.emit 'cards', 'DATA HERE'
-        return null
       .on 'disconnect', ->
         console.log socket.id + ' disconnected'
         return null
     return null
+
+  server.app.io = io
 
   next()
   return

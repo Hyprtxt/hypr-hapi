@@ -137,6 +137,9 @@ server.route
       server.plugins['jade'].global
     ]
     handler: ( request, reply ) ->
+      server.app.io.sockets.emit 'message',
+        message: 'this is just a test'
+        type: 'success'
       return reply.view 'readme', request.pre
 
 server.route
@@ -179,7 +182,7 @@ server.route
 
 server.route
   method: 'GET'
-  path: '/export'
+  path: '/export/{start}'
   config:
     auth: 'facebook'
     pre: [
@@ -191,14 +194,23 @@ server.route
         if cached is null
           reply(' go get new data' )
         else
-          console.log cached[0],
+          reply.redirect '/'
+          setTimeout ->
+            server.app.io.sockets.emit 'message',
+              message: 'Exporting leads to acton starting with # ' + sliceStart
+              type: 'success'
+          , 500
+          # console.log cached[0],
           _report = []
-          sliceStart = 720
+          sliceStart = parseInt( request.params.start )
           slice = Array.prototype.slice.call( cached, sliceStart )
           # slice = cached
           q = Async.queue upsertLead, 1
           q.drain = ->
-            reply( _report )
+            server.app.io.sockets.emit 'message',
+              message: 'All leads exported' + sliceStart
+              type: 'success'
+              hideAfter: false
             return null
           Async.forEachOf( slice, ( lead, key, done ) ->
             leadData = {}
@@ -244,10 +256,11 @@ upsertLead = ( data, done ) ->
     qs:
       email: data.leadData.Email
     json: data.leadData
-    # form:
-  # console.log opts
   Request opts, ( err, resp, body ) ->
     console.log resp.statusCode, body
+    server.app.io.sockets.emit 'message',
+      message: resp.statusCode + ' ' + body.message + ' for ' + data.leadData.Email
+      type: 'success'
     setTimeout ->
       done()
     , 3000
