@@ -1,10 +1,10 @@
 {
-  "name": "auth.hyprtxt.com",
-  "version": "0.1.0",
+  "name": "gulp.hyprtxt.com",
+  "version": "0.2.0",
   "authors": [
     "Taylor Young <taylor@hyprtxt.com>"
   ],
-  "description": "HAPI Google Auth Example",
+  "description": "Gulp Static Site Generator",
   "main": "index.coffee",
   "license": "MIT",
   "private": true,

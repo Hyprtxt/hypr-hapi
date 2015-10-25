@@ -7,7 +7,6 @@ coffee = require 'gulp-coffee'
 livereload = require 'gulp-livereload'
 rimraf = require 'rimraf'
 list = require 'gulp-task-listing'
-exec = require('child_process').exec
 
 dest = './static_generated'
 
@@ -72,7 +71,7 @@ jade = require 'gulp-jade'
 fs = require 'fs'
 coffeeScript = require 'coffee-script'
 
-jadeData = {}
+_jadeData = {}
 gulp.task 'setupJadeData', ( next ) ->
   fs.readFile './view-data/global.coffee', 'utf8', ( err, _data ) ->
     if err
@@ -81,14 +80,13 @@ gulp.task 'setupJadeData', ( next ) ->
       coffeeopts =
         bare: true
         header: false
-      jadeData = eval coffeeScript.compile _data, coffeeopts
-      console.log jadeData
+      _jadeData = eval coffeeScript.compile _data, coffeeopts
     return next()
 
 gulp.task 'jade', [ 'setupJadeData' ], ->
   return gulp.src [ './views/**/*.jade', '!./views/layout/**' ]
     .pipe jade
-      locals: jadeData
+      locals: _jadeData
       pretty: true
     .pipe gulp.dest dest
     .pipe livereload()

@@ -12,9 +12,10 @@ module.exports =
     link: '/'
   navigation: [
     title: 'A Link'
-    link: '#somewhere'
+    link: '/test'
   ,
     title: 'Another Link'
     link: '#somewhere'
   ]
   timestamp: new Date()
+  env: process.env.NODE_ENV
