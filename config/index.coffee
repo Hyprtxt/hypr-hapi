@@ -7,10 +7,10 @@ store = new Confidence.Store
     $filter: 'env'
     production:
       host: 'localhost'
-      port: 8007
+      port: 8013
     $default: # for devs
-      host: 'hapi.hyprtxt.dev'
-      port: 8007
+      host: 'mssql.hyprtxt.dev'
+      port: 8013
 
   view:
     $filter: 'env'
@@ -36,6 +36,8 @@ store = new Confidence.Store
     ,
     # jade helper
       register: require '../plugins/jade'
+    ,
+      register: require '../plugins/mssql'
     ,
     # event logging
       register: require 'good'
