@@ -2,10 +2,6 @@
 .container
   .row
     .col-sm-12
-      hr
-      pre=JSON.stringify( session, null, 2 )
-      hr
-script.
-  var session=!{JSON.stringify( session )}
+      pre=env
 each script in javascripts
-  script(src=script)
+  script(src=script, type='text/javascript')

@@ -62,3 +62,47 @@ gulp.task 'watch', ['copystyle', 'sass', 'copyjs', 'coffee'], ->
   gulp.watch './src/coffee/**/*.coffee', ['coffee']
   gulp.watch './views/**/*.jade', ['reload']
   return
+
+# static site stuff
+jade = require 'gulp-jade'
+fs = require 'fs'
+coffeeScript = require 'coffee-script'
+
+_jadeData = {}
+_pretty = true
+gulp.task 'setupJadeData', ( next ) ->
+  fs.readFile './view-data/global.coffee', 'utf8', ( err, _data ) ->
+    if err
+      throw err
+    else
+      coffeeopts =
+        bare: true
+        header: false
+      _jadeData = eval coffeeScript.compile _data, coffeeopts
+    return next()
+
+gulp.task 'jade', [ 'setupJadeData' ], ->
+  return gulp.src [ './views/**/*.jade', '!./views/layout/**' ]
+    .pipe jade
+      locals: _jadeData
+      pretty: _pretty
+    .pipe gulp.dest dest
+    .pipe livereload()
+
+gulp.task 'copystatic', ->
+  return gulp.src [ './static/**', dest + '/**' ]
+    .pipe gulp.dest dest
+
+gulp.task 'render', [
+    'copystatic'
+    'jade'
+    'copyfont'
+    'copycss'
+    'sass'
+    'copyjs'
+    'coffee'
+  ], ( cb ) ->
+  return rimraf dest + '/map', cb
+
+gulp.task 'build', [ 'clean' ], ->
+  return gulp.start 'render'

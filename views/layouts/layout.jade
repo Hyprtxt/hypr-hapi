@@ -11,8 +11,13 @@ html
             each nav in navigation
               li.nav-item
                 a.nav-link(href=nav.link) #{nav.title}
-        
+
     .container
       block content
+        .row
+          .col-md-12
+            h1 This is the default content block
+            p Add a content block to your main jade file to override this content.
+
     block foot
       include ./includes/foot.jade
