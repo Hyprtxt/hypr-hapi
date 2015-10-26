@@ -1,0 +1,22 @@
+{
+  "name": "gulp.hyprtxt.com",
+  "version": "0.2.0",
+  "authors": [
+    "Taylor Young <taylor@hyprtxt.com>"
+  ],
+  "description": "Gulp Static Site Generator",
+  "main": "index.coffee",
+  "license": "MIT",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "bootstrap": "v4-dev",
+    "font-awesome": "~4.4.0"
+  }
+}

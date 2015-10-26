@@ -1,0 +1,18 @@
+doctype html
+html
+  block head
+    include ./includes/head.jade
+  body
+    block navigation
+      nav.navbar.navbar-light.bg-faded
+        .container
+          a.navbar-brand(href=navbarBrand.link) #{navbarBrand.title}
+          ul.nav.navbar-nav
+            each nav in navigation
+              li.nav-item
+                a.nav-link(href=nav.link) #{nav.title}
+        
+    .container
+      block content
+    block foot
+      include ./includes/foot.jade
