@@ -3,7 +3,7 @@ Request = require 'request'
 exports.register = ( server, options, next ) ->
 
   cache = server.cache
-    expiresIn: 10 * 60 * 1000
+    expiresIn: 7 * 24 * 60 * 60 * 1000 # One week
 
   server.app.cache = cache
 
