@@ -11,7 +11,7 @@ module.exports =
     title: 'Hyprtxt Static'
     link: '/'
   navigation: [
-    title: 'A Link'
+    title: 'Test Page'
     link: '/test'
   ,
     title: 'Another Link'
