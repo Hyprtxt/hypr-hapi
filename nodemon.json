@@ -1,7 +1,0 @@
-{
-  "ignore": [
-    "log",
-    "src",
-    "static_generated"
-  ]
-}
