@@ -237,15 +237,15 @@ server.route
 upsertLead = ( data, done ) ->
   opts =
     method: 'PUT'
-    url: '/api/1/list/l-dyn-lead-004b/record'
+    url: '/api/1/list/l-003b/record'
     baseUrl: 'https://restapi.actonsoftware.com'
     qs:
-      email: data.leadData.Email
+      email: data.leadData.email
     json: data.leadData
   startTime = Date.now()
   Request opts, ( err, resp, body ) ->
     console.log resp.statusCode, body
-    theMessage = '#' + data.number + ' ' + body.message + ' for ' + data.leadData.Email + ' code: ' + resp.statusCode
+    theMessage = '#' + data.number + ' ' + body.message + ' for ' + data.leadData.email + ' code: ' + resp.statusCode
     server.app.cache.get 'messageCache', ( err, cached ) ->
       if cached is null
         cached = []
@@ -270,7 +270,7 @@ upsertLead = ( data, done ) ->
     return null
   .auth null, null, true, data.token
 
-server.app.q = Async.queue upsertLead, 3
+server.app.q = Async.queue upsertLead, 1
 
 server.route
   method: 'GET'
@@ -305,14 +305,20 @@ server.route
             return null
           Async.forEachOf( slice, ( lead, key, done ) ->
             leadData = {}
-            leadData["Created On"] = lead.created_time
-            leadData["Topic"] = 'Facebook'
+            leadData["new_acton_websource"] = 'facebook'
+            leadData["new_acton_webmedium"] = 'display'
+            leadData["new_acton_campaignname"] = 'FB Lead Ads'
+            leadData["_CAMPAIGN"] = 'facebook'
+            leadData["Topic"] = 'facebook'
+            leadData["_TIME"] = lead.created_time
             # console.log key, lead
             lead.field_data.forEach ( data ) ->
               if data.name is 'full_name'
-                leadData["Name"] = data.values[0]
+                uHname = data.values[0].split(' ')
+                leadData["First Name"] = uHname.shift()
+                leadData["Last Name"] = uHname.join(' ')
               if data.name is 'email'
-                leadData["Email"] = data.values[0]
+                leadData["email"] = data.values[0]
               return null
             console.log key + sliceStart, leadData
             task = {}
@@ -322,7 +328,7 @@ server.route
             server.app.q.push task, ( err ) ->
               if err
                 throw err
-              console.log 'upsert ' + ( key + sliceStart ) + ' was Completed for ' + leadData.Email
+              console.log 'upsert ' + ( key + sliceStart ) + ' requested for ' + leadData.email
               return null
             return null
           , ( err ) ->
@@ -331,69 +337,7 @@ server.route
             return null
           )
         return null
-    # getQuery = {
-    #       sql: 'SELECT * FROM `users` WHERE ?',
-    #       values: [
-    #         sid: data.sid
-    #       ]
-    #     }
-    #     server.plugins['mysql'].query getQuery, ( rows ) ->
-    #       user = rows[0]
-
-# getAllLeads = ( array, request, done ) ->
-#   opts =
-#     method: 'GET'
-#     json: true
-#     baseUrl: 'https://graph.facebook.com'
-#     url: '/v2.5/' + request.params.formid + '/leads'
-#     qs:
-#       access_token: request.auth.credentials.facebook.access_token
-#   getLeads array, opts, ( array ) ->
-#     server.log [ 'lead count' ], array.length
-#     done array
-#     return null
-#   return null
-#
-#
-# getLeads = ( array, opts, done ) ->
-#   Request opts, ( err, resp, body ) ->
-#     if err
-#       throw err
-#     server.log [ 'lead page request', 'status' ], resp.statusCode
-#     body.data.forEach ( object ) ->
-#       array.push object
-#       return null
-#     if body.paging
-#       if body.paging.next
-#         opts.qs.after = body.paging.cursors.after
-#         getLeads array, opts, done
-#       else
-#         done array
-#     else
-#       done body.data
-#     return null
-#   return null
-
-# server.route
-#   method: 'GET'
-#   path: '/import/{formid}'
-#   config:
-#     pre: [
-#       server.plugins['jade'].global
-#     ]
-#     handler: ( request, reply ) ->
-#       opts =
-#         method: 'GET'
-#         json: true
-#         baseUrl: 'https://www.facebook.com'
-#         url: '/ads/leadgen/export_csv'
-#         qs:
-#           id: request.params.formid
-#           type: 'form'
-#       return Request opts, ( err, resp, body ) ->
-#         console.log body
-#         # request.pre.forms = body.data
-#         return reply.view 'forms', request.pre
+      return null
 
 server.route
   method: 'GET'
@@ -418,12 +362,13 @@ server.route
       if request.params.paging is 'prev'
         opts.qs.before = paging.cursors.before
       console.log opts.qs
-      return Request opts, ( err, resp, body ) ->
+      Request opts, ( err, resp, body ) ->
         # console.log body
         request.pre.leads = body.data
         request.pre.paging = body.paging
         request.session.set 'paging', body.paging
         return reply.view 'leads', request.pre
+      return null
 
 
 # server.route

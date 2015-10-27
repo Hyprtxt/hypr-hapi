@@ -220,7 +220,7 @@ https://restapi.actonsoftware.com/api/1/list?listingtype=CONTACT_LIST
 
 ```
 curl -X GET \
--H "Authorization: Bearer 37ccba419d2416a291aed72446472" \
+-H "Authorization: Bearer 9d898f869c91f960498d8b08a9832d4" \
 -H "Cache-Control: no-cache" \
 https://restapi.actonsoftware.com/api/1/list/l-0086
 ```
@@ -231,7 +231,7 @@ Upload a file? This is cray cray...
 
 ```
 curl -X PUT
--H "Authorization: Bearer 37ccba419d2416a291aed72446472" \
+-H "Authorization: Bearer 9d898f869c91f960498d8b08a9832d4" \
 -H "Cache-Control: no-cache" \
 -H "Content-Type: multipart/form-data" \
 -F "listname=InvitationTokens" \
@@ -252,7 +252,7 @@ Don't do this, use Upsert to prevent duplication
 
 ```
 curl -X POST \
--H "Authorization: Bearer 37ccba419d2416a291aed72446472" \
+-H "Authorization: Bearer 9d898f869c91f960498d8b08a9832d4" \
 -H "Content-Type: application/json" \
 -H "Cache-Control: no-cache" \
 -d '{"Email":"taylor.young@ascendlearning.com","First Name":"Taylor","Last Name":"Young"}' \
@@ -261,7 +261,7 @@ https://restapi.actonsoftware.com/api/1/list/l-0086/record
 
 ```
 curl -X POST \
--H "Authorization: Bearer 37ccba419d2416a291aed72446472" \
+-H "Authorization: Bearer 9d898f869c91f960498d8b08a9832d4" \
 -H "Content-Type: application/json" \
 -H "Cache-Control: no-cache" \
 -d '{"Email":"taylor.young@ascendlearning.com","Name":"Taylor Young","First Name":"Taylor","Last Name":"Young"}' \
@@ -276,7 +276,7 @@ curl -X POST -H "Authorization: Bearer d46940913759bf58f4c1778ed54e43" -H "Conte
 
 ```
 curl -X PUT \
--H "Authorization: Bearer 37ccba419d2416a291aed72446472" \
+-H "Authorization: Bearer 9d898f869c91f960498d8b08a9832d4" \
 -H "Content-Type: application/json" \
 -H "Cache-Control: no-cache" \
 -d '{"Name":"Do Test","Name":"Taylor Young","Topic":"Facebook"}' \
@@ -286,11 +286,21 @@ curl -X PUT \
 Example with good data formatting
 ```
 curl -X PUT \
--H "Authorization: Bearer b92f407d9adef3a14a813d2b4217569b" \
+-H "Authorization: Bearer 9d898f869c91f960498d8b08a9832d4" \
 -H "Content-Type: application/json" \
 -H "Cache-Control: no-cache" \
 -d '{ "Created On": "2015-10-09T23:11:56+0000", "Topic": "Facebook", "Name": "Jay Gonzalez", "Email": "Johng8247@yahoo.com" }' \
 "https://restapi.actonsoftware.com/api/1/list/l-0086/record?email=Johng8247@yahoo.com"
+```
+
+Facebook Form List Formatting
+```
+curl -X PUT \
+-H "Authorization: Bearer 9d898f869c91f960498d8b08a9832d4" \
+-H "Content-Type: application/json" \
+-H "Cache-Control: no-cache" \
+-d '{ "_TIME": "2015-10-09T23:11:56+0000", "new_acton_websource": "facebook", "new_acton_webmedium": "display", "new_acton_campaignname": "FB Lead Ads", "_CAMPAIGN": "facebook", "email": "taylor@hyprtxt.com", "Topic": "facebook", "First Name": "Taylor", "Last Name": "Young" }' \
+"https://restapi.actonsoftware.com/api/1/list/l-003b/record?email=taylor@hyprtxt.com"
 ```
 
 ## Interesting TLDs
