@@ -303,6 +303,24 @@ curl -X PUT \
 "https://restapi.actonsoftware.com/api/1/list/l-003b/record?email=taylor@hyprtxt.com"
 ```
 
+The proper list!
+```
+curl -X PUT \
+-H "Authorization: Bearer 9d898f869c91f960498d8b08a9832d4" \
+-H "Content-Type: application/json" \
+-H "Cache-Control: no-cache" \
+-d '{ "_TIME": "2015-10-09T23:11:56+0000", "new_acton_websource": "facebook", "new_acton_webmedium": "display", "new_acton_campaignname": "FB Lead Ads", "Email": "taylor@hyprtxt.com", "Topic": "facebook", "FirstName": "Taylor", "LastName": "Young" }' \
+"https://restapi.actonsoftware.com/api/1/list/l-008e/record?email=taylor@hyprtxt.com"
+```
+
+## POST url form submission style
+
+```
+curl -X POST \
+-d "_TIME=2015-10-09T23%3A11%3A56%2B0000&utm_source=facebook&utm_medium=display&utm_campaign=FB+Lead+Ads&Email=taylor%40hyprtxt.com&Topic=facebook&FirstName=Taylor&LastName=Young" \
+"http://certify.nasm.org/acton/eform/14843/0009/d-ext-0002"
+```
+
 ## Interesting TLDs
 
 * .coach

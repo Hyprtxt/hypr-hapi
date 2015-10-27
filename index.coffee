@@ -74,35 +74,6 @@ server.method 'acton_token', getActOnAccessToken,
     expiresIn: 3500 * 1000
     generateTimeout: 1000
 
-# setupActon = ->
-#   server.methods.acton_token ( err, acton ) ->
-#     return null
-#   return null
-#
-# setupActon()
-
-# setupFacebookSubscriptionCallback = ->
-#   server.methods.facebook_token ( err, fb ) ->
-#     opts =
-#       url: '/v2.5/' + fb.client_id + '/subscriptions'
-#       baseUrl: 'https://graph.facebook.com'
-#       method: 'POST'
-#       json: true
-#       formData:
-#         object: 'page'
-#         callback_url: 'https://tunnel.hyprtxt.com/realtime'
-#         fields: 'leadgen'
-#         access_token: fb.access_token
-#         verify_token: 'verify1234'
-#     Request opts, ( err, resp, body ) ->
-#       if body.success is true
-#         console.log 'subscription callback setup success'
-#       else
-#         console.log 'subscription setup failure', body
-#       return
-#
-# setupFacebookSubscriptionCallback()
-
 server.route
   method: 'GET'
   path: '/cache'
@@ -236,16 +207,13 @@ server.route
 
 upsertLead = ( data, done ) ->
   opts =
-    method: 'PUT'
-    url: '/api/1/list/l-003b/record'
-    baseUrl: 'https://restapi.actonsoftware.com'
-    qs:
-      email: data.leadData.email
-    json: data.leadData
+    method: 'POST'
+    url: 'http://certify.nasm.org/acton/eform/14843/0009/d-ext-0002'
+    qs: data.leadData
   startTime = Date.now()
   Request opts, ( err, resp, body ) ->
     console.log resp.statusCode, body
-    theMessage = '#' + data.number + ' ' + body.message + ' for ' + data.leadData.email + ' code: ' + resp.statusCode
+    theMessage = '#' + data.number + ' ' + data.leadData.Email + ' code: ' + resp.statusCode
     server.app.cache.get 'messageCache', ( err, cached ) ->
       if cached is null
         cached = []
@@ -258,7 +226,7 @@ upsertLead = ( data, done ) ->
         return null
       return null
     latency = Date.now() - startTime
-    wait = ( 3000 - latency )
+    wait = ( 500 - latency )
     if wait > 0
       timeout = wait
     else
@@ -270,7 +238,7 @@ upsertLead = ( data, done ) ->
     return null
   .auth null, null, true, data.token
 
-server.app.q = Async.queue upsertLead, 1
+server.app.q = Async.queue upsertLead, 10
 
 server.route
   method: 'GET'
@@ -305,20 +273,20 @@ server.route
             return null
           Async.forEachOf( slice, ( lead, key, done ) ->
             leadData = {}
-            leadData["new_acton_websource"] = 'facebook'
-            leadData["new_acton_webmedium"] = 'display'
-            leadData["new_acton_campaignname"] = 'FB Lead Ads'
-            leadData["_CAMPAIGN"] = 'facebook'
+            leadData["utm_source"] = 'facebook'
+            leadData["utm_medium"] = 'display'
+            leadData["utm_campaign"] = 'FB Lead Ads'
+            # leadData["_CAMPAIGN"] = 'facebook'
             leadData["Topic"] = 'facebook'
             leadData["_TIME"] = lead.created_time
             # console.log key, lead
             lead.field_data.forEach ( data ) ->
               if data.name is 'full_name'
                 uHname = data.values[0].split(' ')
-                leadData["First Name"] = uHname.shift()
-                leadData["Last Name"] = uHname.join(' ')
+                leadData["FirstName"] = uHname.shift()
+                leadData["LastName"] = uHname.join(' ')
               if data.name is 'email'
-                leadData["email"] = data.values[0]
+                leadData["Email"] = data.values[0]
               return null
             console.log key + sliceStart, leadData
             task = {}
@@ -370,27 +338,6 @@ server.route
         return reply.view 'leads', request.pre
       return null
 
-
-# server.route
-#   method: 'GET'
-#   path: '/fb/leads/{formid}'
-#   config:
-#     pre: [
-#       server.plugins['jade'].global
-#     ]
-#     handler: ( request, reply ) ->
-#       opts =
-#         method: 'GET'
-#         json: true
-#         baseUrl: 'https://graph.facebook.com'
-#         url: '/v2.5/' + fbPageId + '/leadgen_forms'
-#         qs:
-#           access_token: request.session.get('facebook').access_token
-#       return Request opts, ( err, resp, body ) ->
-#         console.log body
-#         request.pre.forms = body.data
-#         return reply.view 'forms', request.pre
-
 server.route
   method: 'GET'
   path: '/acton/lists'
@@ -426,33 +373,6 @@ server.route
         session.expiration = parseInt( now - 60 ) + parseInt grant.response.raw.expires
       request.session.set grant.provider, session
       return reply.redirect '/'
-
-# server.route
-#   method: 'GET'
-#   path: '/realtime'
-#   config:
-#     handler: ( request, reply ) ->
-#       console.log request.query
-#       if request.query.hub is undefined
-#         return reply().code 404
-#       if request.query.hub.mode is 'subscribe'
-#         return reply request.query.hub.challenge
-#       else
-#         return reply().code 400
-
-
-# server.route
-#   method: 'POST'
-#   path: '/realtime'
-#   config:
-#     payload:
-#       output: 'data'
-#     handler: ( request, reply ) ->
-#       request.log [ 'ping', 'facebook', 'realtime' ], request.payload
-#       console.log 'Recieved PING~'
-#       console.log request.payload
-#       console.log '~PING'
-#       return reply()
 
 server.start ->
   return console.info 'Server started at: ', server.info.uri
