@@ -1,7 +1,7 @@
 module.exports =
   title: 'AFAA'
   javascripts: [
-    '/js/jquery.min.js'
+    '/js/jquery/jquery.min.js'
     '/js/script.js'
   ]
   stylesheets: [
