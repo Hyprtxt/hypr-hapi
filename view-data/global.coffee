@@ -1,5 +1,5 @@
 module.exports =
-  title: 'Hyprtxt Static'
+  title: 'AFAA'
   javascripts: [
     '/js/jquery.min.js'
     '/js/script.js'
@@ -8,14 +8,33 @@ module.exports =
     '/css/style.css'
   ]
   navbarBrand:
-    title: 'Hyprtxt Static'
+    title: 'AFAA'
     link: '/'
   navigation: [
-    title: 'Test Page'
-    link: '/test'
+    title: 'Readme'
+    link: '/readme'
   ,
-    title: 'Another Link'
-    link: '#somewhere'
+    title: 'Become A Trainer'
+    link: '#'
+  ,
+    title: 'Courses'
+    link: '#'
+  ,
+    title: 'Resources'
+    link: '#'
+  ,
+    title: 'Events'
+    link: '#'
+  ,
+    title: 'Contact'
+    link: '#'
+  ,
+    title: 'Blog'
+    link: '#'
+  ,
+    title: 'Login'
+    link: '#'
+    liclass: 'pull-right'
   ]
   timestamp: new Date()
   env: process.env.NODE_ENV
