@@ -165,24 +165,27 @@ block content
       .bg-primary
         h3.p-a.m-b-0 Order Summary
     .col-lg-12
-      .bg-gray
-        table.table
+      .what
+        table.table.table-bordered.table-striped
           thead
             tr
               td Product
               td Quantity
               td Amount
           tbody
+            - var loop = [ 1, 2, 3 ]
+            each thing in loop
+              tr
+                td 
+                  p.m-b-0 CPT #{thing} Online Classroom
+                    br
+                    small
+                      strong SKU: CPT4333K
+                td=thing
+                td $999.00
             tr
-              td 
-                p.m-b-0 CPT 4 Online Classroom
-                  br
-                  small
-                    strong SKU: CPT4333K
-              td 1
-              td $999.00
-        p.pull-right 
-          strong Total 
-            span.p-l $999.00
+              td(colspan=3)
+                strong.pull-right Total 
+                  span.p-l $999.00
         br
         br

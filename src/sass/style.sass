@@ -108,9 +108,9 @@ $btn-secondary-color:            $gray-dark
 $btn-secondary-bg:               #fff !default
 $btn-secondary-border:           $gray-dark
 
-// $btn-info-color:                 #fff !default
-// $btn-info-bg:                    $brand-info !default
-// $btn-info-border:                $btn-info-bg !default
+$btn-info-color:                 white
+$btn-info-bg:                    transparent
+$btn-info-border:                white
 //
 // $btn-success-color:              #fff !default
 // $btn-success-bg:                 $brand-success !default
@@ -280,15 +280,26 @@ $btn-secondary-border:           $gray-dark
 // Styles
 
 body
-  background: $brand-primary
+  margin-top: 5rem
+  background-color: $brand-primary
+  background: linear-gradient( 0deg, lighten( $brand-primary, 5 ), white )
+  background-attachment: fixed
 
-body > nav
-  margin-bottom: 2rem
-  .container
-    background: transparent
+.navbar-main
+  background: $brand-primary
+  a
+    color: white
+  li:hover a
+    text-decoration: underline
+
+nav .container
+  background: transparent
 
 .container
   background: white
 
 select
   height: 2.5rem
+
+.foot pre
+  color: white
