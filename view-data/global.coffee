@@ -38,6 +38,11 @@ module.exports =
     title: 'Login'
     link: '#'
     liclass: 'pull-right'
+  ,
+    title: ''
+    link: '#'
+    liclass: 'pull-right'
+    class: [ 'fa', 'fa-search' ]
   ]
   timestamp: new Date()
   env: process.env.NODE_ENV

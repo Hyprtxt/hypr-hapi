@@ -4,7 +4,7 @@ html
     include ./includes/head.jade
   body
     block navigation
-      nav.navbar.navbar-light.bg-faded
+      nav.navbar.navbar-main
         .container
           a.navbar-brand.text-bold(href=navbarBrand.link) #{navbarBrand.title}
           button.navbar-toggler.pull-right.hidden-md-up(data-toggle='collapse', data-target='#mobileNav') &#9776;
@@ -17,6 +17,10 @@ html
             each nav in navigation
               li.nav-item
                 a.nav-link(href=nav.link, class=nav.class, id=nav.id) #{nav.title}
+      nav.navbar.navbar-message.bg-faded
+        .container
+          p.float-left.m-b-0 10% Off All Orders, Ends Thursday!
+          p.float-right.m-b-0 Use Code: GOAFAA or Call&nbsp;1&#8209;800&#8209;555&#8209;5555
 
     block content
 

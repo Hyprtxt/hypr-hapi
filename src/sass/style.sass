@@ -269,6 +269,16 @@ $btn-border-radius-sm:           1rem
 .text-italic
   font-weight: italic
 
+.float-left
+  float: left
+
+.float-right
+  float: right
+
+@include media-breakpoint-down(xs)
+  .text-center-xs-down
+    text-align: center
+
 // Bootstrap Overrides
 // Should edit variables instead
 
@@ -280,8 +290,17 @@ h1, h2, h3, h4, h5, h6
 
 // AFAA Styles
 
-body > nav
+// body > nav
+body > nav.navbar-message
   margin-bottom: 2rem
+
+.navbar-main
+  border-bottom: 1px solid $gray-dark
+  border-radius: 0
+  a
+    color: $gray-dark
+  a:hover
+    color: $gray-light
 
 img
   max-width: 100%
@@ -296,9 +315,10 @@ img.circle
 
 // Media Queries
 
-@include media-breakpoint-down(xs)
-  .text-center-sm
+@include media-breakpoint-down(sm)
+  .navbar-message p
     text-align: center
+    float: none
 
 @include media-breakpoint-down(md)
   .trainer-testimonial
