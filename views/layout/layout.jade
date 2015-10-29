@@ -7,8 +7,7 @@ html
       nav.navbar.navbar-light.bg-faded
         .container
           a.navbar-brand(href=navbarBrand.link) #{navbarBrand.title}
-          button.navbar-toggler.pull-right.hidden-md-up(data-toggle='collapse', data-target='#mobileNav')
-            &#9776;
+          button.navbar-toggler.pull-right.hidden-md-up(data-toggle='collapse', data-target='#mobileNav') &#9776;
           ul.nav.navbar-nav.hidden-sm-down
             each nav in navigation
               li.nav-item(class=nav.liclass)
