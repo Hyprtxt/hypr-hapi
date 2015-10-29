@@ -23,31 +23,31 @@
 @import "bootstrap/scss/buttons"
 
 // Components
-// @import "bootstrap/sass/animation"
-// @import "bootstrap/sass/dropdown"
-// @import "bootstrap/sass/button-group"
-// @import "bootstrap/sass/input-group"
-// @import "bootstrap/sass/custom-forms"
+// @import "bootstrap/scss/animation"
+// @import "bootstrap/scss/dropdown"
+// @import "bootstrap/scss/button-group"
+@import "bootstrap/scss/input-group"
+@import "bootstrap/scss/custom-forms"
 @import "bootstrap/scss/nav"
 @import "bootstrap/scss/navbar"
-// @import "bootstrap/sass/card"
-// @import "bootstrap/sass/breadcrumb"
-// @import "bootstrap/sass/pagination"
-// @import "bootstrap/sass/pager"
-// @import "bootstrap/sass/labels"
-// @import "bootstrap/sass/jumbotron"
-// @import "bootstrap/sass/alert"
-// @import "bootstrap/sass/progress"
-// @import "bootstrap/sass/media"
-// @import "bootstrap/sass/list-group"
-// @import "bootstrap/sass/responsive-embed"
-// @import "bootstrap/sass/close"
+// @import "bootstrap/scss/card"
+// @import "bootstrap/scss/breadcrumb"
+// @import "bootstrap/scss/pagination"
+// @import "bootstrap/scss/pager"
+// @import "bootstrap/scss/labels"
+// @import "bootstrap/scss/jumbotron"
+// @import "bootstrap/scss/alert"
+// @import "bootstrap/scss/progress"
+// @import "bootstrap/scss/media"
+@import "bootstrap/scss/list-group"
+// @import "bootstrap/scss/responsive-embed"
+// @import "bootstrap/scss/close"
 
 // Components w/ JavaScript
-// @import "bootstrap/sass/modal"
-// @import "bootstrap/sass/tooltip"
-// @import "bootstrap/sass/popover"
-// @import "bootstrap/sass/carousel"
+// @import "bootstrap/scss/modal"
+// @import "bootstrap/scss/tooltip"
+// @import "bootstrap/scss/popover"
+// @import "bootstrap/scss/carousel"
 
 // Utility classes
 @import "bootstrap/scss/utilities"
@@ -78,9 +78,19 @@ h1, h2, h3, h4, h5, h6
 body > nav
   margin-bottom: 2rem
 
+.btn
+  border-radius: 1.25rem
+  text-transform: uppercase
+
+.btn-lg
+  border-radius: 2rem
+
+.no-bull
+  list-style-type: none
+
 img
   max-width: 100%
-  border-radius: 1rem
+  border-radius: 0.5rem
   margin: 1rem 0
 
 .colophon
@@ -88,3 +98,15 @@ img
 
 img.circle
   border-radius: 50%
+
+@include media-breakpoint-down(md)
+  .trainer-testimonial
+    text-align: center
+    img
+      display: block
+      margin: 1rem auto
+
+@include media-breakpoint-up(lg)
+  .trainer-testimonial img
+    float: left
+    margin-right: 1rem
