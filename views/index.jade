@@ -3,5 +3,186 @@ extends ./layout/layout.jade
 block content
   .row
     .col-md-12
-      h2 This is the checkout page
-      //- include:markdown-it ../readme.md
+      h2.text-center.p-t-md Checkout
+      p.text-center Already Registered? 
+        a(href='#') Sign in to your account.
+  .row
+    .col-md-12
+      .bg-primary.m-b-md
+        h3.p-a.m-b-0 Account and Contact Information
+    .col-md-12
+      form
+        .form-group.row
+          label.col-sm-3 First Name
+          .col-sm-9.col-lg-6.col-xl-5
+            input.form-control
+        .form-group.row
+          label.col-sm-3 Last Name
+          .col-sm-9.col-lg-6.col-xl-5
+            input.form-control
+        .form-group.row
+          label.col-sm-3 Email Address
+          .col-sm-9.col-lg-6.col-xl-5
+            input.form-control
+        .form-group.row
+          label.col-sm-3 Password
+          .col-sm-9.col-lg-6.col-xl-5
+            input.form-control(type='password')
+        .form-group.row
+          label.col-sm-3 Confirm Password
+          .col-sm-9.col-lg-6.col-xl-5
+            input.form-control(type='password')
+        .form-group.row
+          label.col-sm-3 Phone Number
+          .col-sm-9.col-lg-6.col-xl-5
+            input.form-control
+        .form-group.row
+          .col-sm-3
+          .col-sm-9.col-lg-6.col-xl-5.checkbox
+            label
+              input(type='checkbox' checked)
+              |  Recieve Updates from NASM
+  .row
+    .col-lg-6
+      .bg-primary.m-b-md
+        h3.p-a.m-b-0 Billing Information
+      form
+        .row.hidden-md-down
+          .col-sm-12.m-b-lg
+        .form-group.row
+          label.col-sm-4 Name
+          .col-sm-8
+            input.form-control
+        .form-group.row
+          label.col-sm-4 Phone Number
+          .col-sm-8
+            input.form-control
+        .form-group.row
+          label.col-sm-4 Street Address
+          .col-sm-8
+            input.form-control
+        .form-group.row
+          label.col-sm-4 City or APO/AFO
+          .col-sm-8
+            input.form-control
+        .form-group.row
+          label.col-sm-4 Country
+          .col-sm-8
+            select.form-control.p-a
+              option United States
+        .form-group.row
+          label.col-sm-4 State
+          .col-sm-8
+            select.form-control.p-a
+              option Arizona
+        .form-group.row
+          label.col-sm-4 Zipcode
+          .col-sm-8
+            input.form-control
+    .col-lg-6
+      .bg-primary.m-b-md
+        h3.p-a.m-b-0 Shipping Information
+      form
+        .form-group.row
+          .col-sm-12.checkbox
+            label
+              input(type='checkbox')
+              |  Same as Billing
+        .form-group.row
+          label.col-sm-4 Name
+          .col-sm-8
+            input.form-control
+        .form-group.row
+          label.col-sm-4 Phone Number
+          .col-sm-8
+            input.form-control
+        .form-group.row
+          label.col-sm-4 Street Address
+          .col-sm-8
+            input.form-control
+        .form-group.row
+          label.col-sm-4 City or APO/AFO
+          .col-sm-8
+            input.form-control
+        .form-group.row
+          label.col-sm-4 Country
+          .col-sm-8
+            select.form-control.p-a
+              option United States
+        .form-group.row
+          label.col-sm-4 State
+          .col-sm-8
+            select.form-control.p-a
+              option Arizona
+        .form-group.row
+          label.col-sm-4 Zipcode
+          .col-sm-8
+            input.form-control
+  .row
+    .col-lg-12.m-b-md
+      .bg-primary
+        h3.p-a.m-b-0 Shipping Options
+    .col-lg-12.m-b-md
+      p.text-center Please enter your shipping information above, then click the button below.
+      button.btn.btn-primary.center-block Get Shipping Options
+  .row.m-b-md
+    .col-lg-12.m-b-md
+      .bg-primary
+        h3.p-a.m-b-0 Payment Info
+    .col-lg-12
+      form
+        .form-group.row
+          label.col-sm-3 Name on Card
+          .col-sm-9.col-lg-6.col-xl-5
+            input.form-control
+        .form-group.row
+          label.col-sm-3 Card Number
+          .col-sm-9.col-lg-6.col-xl-5
+            input.form-control
+        .form-group.row
+          label.col-sm-3 Security Code
+          .col-sm-2.col-xl-1
+            input.form-control
+        .form-group.row
+          label.col-xs-12.col-sm-3 Expiration
+          .col-xs-6.col-sm-2.col-xl-1
+            input.form-control
+          .col-xs-6.col-sm-2.col-xl-1
+            input.form-control
+        .form-group.row
+          .col-sm-3
+          .col-sm-9.col-lg-6.col-xl-5.checkbox
+            label
+              input(type='checkbox' checked)
+              |  I agree to the 
+              a(href='#') terms and conditions
+    .col-lg-12
+      button.btn.btn-warning.btn-lg.center-block 
+        i.fa.fa-lock
+        |  Continue Checkout
+  .row
+    .col-lg-12.m-b-md
+      .bg-primary
+        h3.p-a.m-b-0 Order Summary
+    .col-lg-12
+      .bg-gray
+        table.table
+          thead
+            tr
+              td Product
+              td Quantity
+              td Amount
+          tbody
+            tr
+              td 
+                p.m-b-0 CPT 4 Online Classroom
+                  br
+                  small
+                    strong SKU: CPT4333K
+              td 1
+              td $999.00
+        p.pull-right 
+          strong Total 
+            span.p-l $999.00
+        br
+        br

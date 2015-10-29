@@ -1,10 +1,11 @@
 module.exports =
   title: 'Hyprtxt Static'
   javascripts: [
-    '/js/jquery.min.js'
+    '/js/jquery/jquery.min.js'
     '/js/script.js'
   ]
   stylesheets: [
+    '/css/font-awesome/font-awesome.min.css'
     '/css/style.css'
   ]
   navbarBrand:
