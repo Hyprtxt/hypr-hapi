@@ -36,7 +36,8 @@ gulp.task 'copyjs', ->
     .pipe gulp.dest dest + '/js/jquery'
 
 gulp.task 'copycss', ->
-  return
+  return gulp.src './bower_components/font-awesome/css/*'
+    .pipe gulp.dest dest + '/css/font-awesome'
 
 gulp.task 'copyfont', ->
   return gulp.src './bower_components/font-awesome/fonts/*'
