@@ -7,9 +7,16 @@ html
       nav.navbar.navbar-light.bg-faded
         .container
           a.navbar-brand(href=navbarBrand.link) #{navbarBrand.title}
-          ul.nav.navbar-nav
+          button.navbar-toggler.pull-right.hidden-md-up(data-toggle='collapse', data-target='#mobileNav')
+            &#9776;
+          ul.nav.navbar-nav.hidden-sm-down
             each nav in navigation
               li.nav-item(class=nav.liclass)
+                a.nav-link(href=nav.link, class=nav.class, id=nav.id) #{nav.title}
+          .clearfix
+          ul#mobileNav.nav.nav-pills.nav-stacked.collapse
+            each nav in navigation
+              li.nav-item
                 a.nav-link(href=nav.link, class=nav.class, id=nav.id) #{nav.title}
 
     block content

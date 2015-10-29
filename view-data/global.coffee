@@ -2,6 +2,8 @@ module.exports =
   title: 'AFAA'
   javascripts: [
     '/js/jquery/jquery.min.js'
+    '/js/bootstrap/util.js'
+    '/js/bootstrap/collapse.js'
     '/js/script.js'
   ]
   stylesheets: [
