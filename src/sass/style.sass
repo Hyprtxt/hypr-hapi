@@ -8,6 +8,186 @@
 @import "bootstrap/scss/variables"
 @import "bootstrap/scss/mixins"
 
+// Custom Bootstrap Overrides
+// You can copy more from 'bootstrap/scss/variables'!
+
+// Colors
+//
+// Grayscale and brand colors for use across Bootstrap.
+
+// $gray-dark:                 #373a3c !default
+// $gray:                      #55595c !default
+// $gray-light:                #818a91 !default
+// $gray-lighter:              #eceeef !default
+// $gray-lightest:             #f7f7f9 !default
+//
+// $brand-primary:             #0275d8 !default
+// $brand-success:             #5cb85c !default
+// $brand-info:                #5bc0de !default
+// $brand-warning:             #f0ad4e !default
+// $brand-danger:              #d9534f !default
+
+// Links
+//
+// Style anchor elements.
+
+// $link-color:                 $brand-primary !default
+// $link-decoration:            none !default
+// $link-hover-color:           darken($link-color, 15%) !default
+// $link-hover-decoration:      underline !default
+
+// Typography
+//
+// Font, line-height, and color for body text, headings, and more.
+
+// $font-family-sans-serif:     "Helvetica Neue", Helvetica, Arial, sans-serif !default
+// $font-family-serif:          Georgia, "Times New Roman", Times, serif !default
+// $font-family-monospace:      Menlo, Monaco, Consolas, "Courier New", monospace !default
+// $font-family-base:           $font-family-sans-serif !default
+
+// Pixel value used to responsively scale all typography. Applied to the `<html>` element.
+// $font-size-root:             16px !default
+//
+// $font-size-base:             1rem !default
+// $font-size-lg:               1.25rem !default
+// $font-size-sm:               .85rem !default
+// $font-size-xs:               .75rem !default
+//
+// $font-size-h1:               2.5rem !default
+// $font-size-h2:               2rem !default
+// $font-size-h3:               1.75rem !default
+// $font-size-h4:               1.5rem !default
+// $font-size-h5:               1.25rem !default
+// $font-size-h6:               1rem !default
+//
+// $display1-size:               6rem !default
+// $display2-size:               5.5rem !default
+// $display3-size:               4.5rem !default
+// $display4-size:               3.5rem !default
+//
+// $display1-weight:             300 !default
+// $display2-weight:             300 !default
+// $display3-weight:             300 !default
+// $display4-weight:             300 !default
+//
+// $line-height:                1.5 !default
+//
+// $headings-margin-bottom:     ($spacer / 2) !default
+// $headings-font-family:       inherit !default
+// $headings-font-weight:       500 !default
+// $headings-line-height:       1.1 !default
+// $headings-color:             inherit !default
+//
+// $lead-font-size:             1.25rem !default
+// $lead-font-weight:           300 !default
+//
+// $text-muted:                  $gray-light !default
+//
+// $abbr-border-color:           $gray-light !default
+//
+// $blockquote-small-color:      $gray-light !default
+// $blockquote-font-size:        ($font-size-base * 1.25) !default
+// $blockquote-border-color:     $gray-lighter !default
+//
+// $hr-border-color:             rgba(0,0,0,.1) !default
+// $hr-border-width:             $border-width !default
+
+// Buttons
+//
+// For each of Bootstrap's buttons, define text, background and border color.
+
+// $btn-padding-x:                  1rem !default
+// $btn-padding-y:                  .375rem !default
+// $btn-font-weight:                normal !default
+//
+// $btn-primary-color:              #fff !default
+// $btn-primary-bg:                 $brand-primary !default
+// $btn-primary-border:             $btn-primary-bg !default
+
+$btn-secondary-color:            $gray-dark
+$btn-secondary-bg:               #fff !default
+$btn-secondary-border:           $gray-dark
+
+// $btn-info-color:                 #fff !default
+// $btn-info-bg:                    $brand-info !default
+// $btn-info-border:                $btn-info-bg !default
+//
+// $btn-success-color:              #fff !default
+// $btn-success-bg:                 $brand-success !default
+// $btn-success-border:             $btn-success-bg !default
+//
+// $btn-warning-color:              #fff !default
+// $btn-warning-bg:                 $brand-warning !default
+// $btn-warning-border:             $btn-warning-bg !default
+//
+// $btn-danger-color:               #fff !default
+// $btn-danger-bg:                  $brand-danger !default
+// $btn-danger-border:              $btn-danger-bg !default
+//
+// $btn-link-disabled-color:        $gray-light !default
+//
+// $btn-padding-x-sm:               .75rem !default
+// $btn-padding-y-sm:               .25rem !default
+//
+// $btn-padding-x-lg:               1.25rem !default
+// $btn-padding-y-lg:               .75rem !default
+
+// Allows for customizing button radius independently from global border radius
+$btn-border-radius:              1.25rem
+$btn-border-radius-lg:           2rem
+$btn-border-radius-sm:           1rem
+
+
+// Navbar
+
+// $navbar-border-radius:              $border-radius !default
+// $navbar-padding-horizontal:         $spacer !default
+// $navbar-padding-vertical:           ($spacer / 2) !default
+//
+// $navbar-dark-color:                 rgba(255,255,255,.5) !default
+// $navbar-dark-hover-color:           rgba(255,255,255,.75) !default
+// $navbar-dark-active-color:          rgba(255,255,255,1) !default
+// $navbar-dark-disabled-color:        rgba(255,255,255,.25) !default
+//
+// $navbar-light-color:                rgba(0,0,0,.3) !default
+// $navbar-light-hover-color:          rgba(0,0,0,.6) !default
+// $navbar-light-active-color:         rgba(0,0,0,.8) !default
+// $navbar-light-disabled-color:       rgba(0,0,0,.15) !default
+
+
+// Navs
+
+// $nav-link-padding:                          .5em 1em !default
+// $nav-link-hover-bg:                         $gray-lighter !default
+//
+// $nav-disabled-link-color:                   $gray-light !default
+// $nav-disabled-link-hover-color:             $gray-light !default
+//
+// $nav-tabs-border-color:                     #ddd !default
+//
+// $nav-tabs-link-hover-border-color:          $gray-lighter !default
+//
+// $nav-tabs-active-link-hover-bg:             $body-bg !default
+// $nav-tabs-active-link-hover-color:          $gray !default
+// $nav-tabs-active-link-hover-border-color:   #ddd !default
+//
+// $nav-tabs-justified-link-border-color:            #ddd !default
+// $nav-tabs-justified-active-link-border-color:     $body-bg !default
+//
+// $nav-pills-border-radius:                   $border-radius !default
+// $nav-pills-active-link-hover-bg:            $component-active-bg !default
+// $nav-pills-active-link-hover-color:         $component-active-color !default
+
+// Breadcrumbs
+
+// $breadcrumb-padding-vertical:   .75rem !default
+// $breadcrumb-padding-horizontal: 1rem !default
+//
+// $breadcrumb-bg:                 $gray-lighter !default
+// $breadcrumb-divider-color:      $gray-light !default
+// $breadcrumb-active-color:       $gray-light !default
+// $breadcrumb-divider:            "/" !default
+
 // Reset and dependencies
 @import "bootstrap/scss/normalize"
 @import "bootstrap/scss/print"
@@ -79,11 +259,7 @@ body > nav
   margin-bottom: 2rem
 
 .btn
-  border-radius: 1.25rem
   text-transform: uppercase
-
-.btn-lg
-  border-radius: 2rem
 
 .no-bull
   list-style-type: none
@@ -98,6 +274,10 @@ img
 
 img.circle
   border-radius: 50%
+
+@include media-breakpoint-down(xs)
+  .text-center-sm
+    text-align: center
 
 @include media-breakpoint-down(md)
   .trainer-testimonial

@@ -3,7 +3,7 @@ extends ./layout/layout.jade
 block content
   .container
     .row
-      .col-lg-9
+      .col-lg-9.text-center-sm
         h1 Lorem ipsum dolor sit amet consectetur adipiscing elit, sed do
         p Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
         .row
@@ -14,7 +14,7 @@ block content
               .col-xs-8.col-xs-push-2
                 button.hidden-sm-up.btn.btn-secondary-outline.btn-block.m-t 
                   i.fa.fa-phone
-                  | (800) 555-5555
+                  |  (800) 555-5555
   hr.m-b-lg.m-t-lg
   .container
     .row
@@ -24,34 +24,34 @@ block content
       .col-sm-12.col-md-6
         ul.no-bull.p-l-0
           li.text-center
-            img.hidden-sm-down.m-r(src='http://placehold.it/50x50')
-            img.hidden-md-up.center-block(src='http://placehold.it/50x50')
+            img.hidden-sm-down.m-r(src='http://placehold.it/60x60')
+            img.hidden-md-up.center-block(src='http://placehold.it/60x60')
             | Lorem ipsum dolor sit amet
           li.text-center
-            img.hidden-sm-down.m-r(src='http://placehold.it/50x50')
-            img.hidden-md-up.center-block(src='http://placehold.it/50x50')
+            img.hidden-sm-down.m-r(src='http://placehold.it/60x60')
+            img.hidden-md-up.center-block(src='http://placehold.it/60x60')
             | Lorem ipsum dolor sit amet
           li.text-center
-            img.hidden-sm-down.m-r(src='http://placehold.it/50x50')
-            img.hidden-md-up.center-block(src='http://placehold.it/50x50')
+            img.hidden-sm-down.m-r(src='http://placehold.it/60x60')
+            img.hidden-md-up.center-block(src='http://placehold.it/60x60')
             | Lorem ipsum dolor sit amet
           li.text-center
-            img.hidden-sm-down.m-r(src='http://placehold.it/50x50')
-            img.hidden-md-up.center-block(src='http://placehold.it/50x50')
+            img.hidden-sm-down.m-r(src='http://placehold.it/60x60')
+            img.hidden-md-up.center-block(src='http://placehold.it/60x60')
             | Lorem ipsum dolor sit amet
       .col-md-6.hidden-sm-down
         ul.no-bull
           li
-            img.m-r(src='http://placehold.it/50x50') 
+            img.m-r(src='http://placehold.it/60x60') 
             | Lorem ipsum dolor sit amet
           li
-            img.m-r(src='http://placehold.it/50x50') 
+            img.m-r(src='http://placehold.it/60x60') 
             | Lorem ipsum dolor sit amet
           li
-            img.m-r(src='http://placehold.it/50x50') 
+            img.m-r(src='http://placehold.it/60x60') 
             | Lorem ipsum dolor sit amet
           li
-            img.m-r(src='http://placehold.it/50x50') 
+            img.m-r(src='http://placehold.it/60x60') 
             | Lorem ipsum dolor sit amet
       .col-sm-12
         p.text-center Lorem ipsum dolor sit amet 
@@ -90,7 +90,7 @@ block content
       p.text-center Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
   hr.m-b-lg.m-t-lg
   .container
-    .col-md-12
+    .col-md-12.m-b-lg
       h2.text-center Lorem ipsum dolor
       h5.text-center Lorem ipsum dolor sit amet consectetur adipiscing elit, sed do
     .col-lg-6
@@ -108,7 +108,8 @@ block content
         .col-sm-10.col-sm-push-1
           button.btn.btn-secondary-outline.btn-block Subscribe
     .col-lg-6.hidden-md-down
-      textarea.form-control(rows=6, placeholder='Comments')
+      //- textarea.form-control(rows=6, placeholder='Comments')
+      img(src='http://placehold.it/540x180').m-t-0
   hr.m-b-lg.m-t-lg
   .container
     .col-md-12
@@ -164,7 +165,7 @@ block content
         li 
           a(href='#') Lorem Ipsum Dolor
     .col-md-3
-      p Image thingy
+      img(src='http://placehold.it/300x200')
     .col-md-12
       p.text-center.colophon &copy; 2014 Aerobics and Fitness Association of America | 12345 E. Novelty Lane, Somewhere, CA 92886 | 
         a(href='#') Privacy Policy
