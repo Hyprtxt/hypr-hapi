@@ -252,14 +252,7 @@ $btn-border-radius-sm:           1rem
 // @import "font-awesome/scss/stacked"
 // @import "font-awesome/scss/icons"
 
-h1, h2, h3, h4, h5, h6
-  font-weight: normal
-
-body > nav
-  margin-bottom: 2rem
-
-.btn
-  text-transform: uppercase
+// Custom Utility Classes
 
 .no-bull
   list-style-type: none
@@ -267,8 +260,28 @@ body > nav
 .text-lg
   font-size: 2rem
 
+.text-xl
+  font-size: 3rem
+
 .text-bold
   font-weight: bold
+
+.text-italic
+  font-weight: italic
+
+// Bootstrap Overrides
+// Should edit variables instead
+
+h1, h2, h3, h4, h5, h6
+  font-weight: normal
+
+.btn
+  text-transform: uppercase
+
+// AFAA Styles
+
+body > nav
+  margin-bottom: 2rem
 
 img
   max-width: 100%
@@ -280,6 +293,8 @@ img
 
 img.circle
   border-radius: 50%
+
+// Media Queries
 
 @include media-breakpoint-down(xs)
   .text-center-sm
