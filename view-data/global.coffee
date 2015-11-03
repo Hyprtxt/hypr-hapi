@@ -1,5 +1,5 @@
 module.exports =
-  title: 'Hypr-Hapi'
+  title: 'Git Hook App'
   javascripts: [
     '/nginx/js/jquery/jquery.min.js'
     '/nginx/js/script.js'
@@ -8,11 +8,11 @@ module.exports =
     '/nginx/css/style.css'
   ]
   navbarBrand:
-    title: 'Hyprtxt'
+    title: 'Git Hook'
     link: '/'
   navigation: [
-    title: 'A Link'
-    link: '#somewhere'
+    # title: 'A Link'
+    # link: '#somewhere'
   ]
   timestamp: new Date()
   env: process.env.NODE_ENV

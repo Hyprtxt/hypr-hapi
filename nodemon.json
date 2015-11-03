@@ -1,17 +1,10 @@
 {
-  "ignore": [
-    "bower_components",
-    "logs",
-    "node_modules",
-    "public_html",
-    "src",
-    "static",
-    "static_generated",
-    "bower.json",
-    "gulpfile.coffee",
-    "license.txt",
-    "nodemon.json",
-    "package.json",
-    "readme.md"
+  "verbose": false,
+  "watch": [
+    "index.coffee",
+    "view-data/",
+    "views/",
+    "config/",
+    "plugins/"
   ]
 }
