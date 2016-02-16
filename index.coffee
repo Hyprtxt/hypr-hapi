@@ -18,20 +18,8 @@ server.route
   config:
     pre: [ server.plugins['jade'].global ]
     handler: ( request, reply ) ->
-      DBRequest = server.plugins.mssql.Request
-      sql = "SELECT TOP 1000 * FROM [Test].[dbo].[test_table]"
-      request.pre.rows = []
-      dbRequest = new DBRequest sql, ( err, rowCount ) ->
-        if err
-          throw err
-        else
-          console.log rowCount + 'rows'
-          return reply.view 'index', request.pre
-      dbRequest.on 'row', ( columns ) ->
-        request.pre.rows.push columns
-        return null
-      server.plugins.mssql.connection.execSql dbRequest
-
+      reply.view 'index', request.pre
+      return
 
 server.start ->
   return console.log 'Server running at:', server.info.uri

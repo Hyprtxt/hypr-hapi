@@ -9,7 +9,7 @@ store = new Confidence.Store
       host: 'localhost'
       port: 8013
     $default: # for devs
-      host: 'mssql.hyprtxt.dev'
+      host: 'telegraph.hyprtxt.dev'
       port: 8013
 
   view:
@@ -37,7 +37,7 @@ store = new Confidence.Store
     # jade helper
       register: require '../plugins/jade'
     ,
-      register: require '../plugins/mssql'
+      register: require '../plugins/sockets'
     ,
     # event logging
       register: require 'good'
