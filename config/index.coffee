@@ -9,7 +9,7 @@ store = new Confidence.Store
       host: 'localhost'
       port: 8013
     $default: # for devs
-      host: 'telegraph.hyprtxt.dev'
+      host: 'localhost'
       port: 8013
 
   view:

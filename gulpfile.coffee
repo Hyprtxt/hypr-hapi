@@ -1,6 +1,6 @@
 gulp = require 'gulp'
 gutil = require 'gulp-util'
-sass = require 'gulp-sass'
+# sass = require 'gulp-sass'
 sourcemaps = require 'gulp-sourcemaps'
 autoprefixer = require 'gulp-autoprefixer'
 coffee = require 'gulp-coffee'
@@ -34,17 +34,17 @@ gulp.task 'copyfont', ->
   return gulp.src './bower_components/font-awesome/fonts/*'
     .pipe gulp.dest dest + '/fonts'
 
-gulp.task 'sass', ->
-  return gulp.src './src/sass/**/*.sass'
-    .pipe sourcemaps.init()
-    .pipe sass(
-        outputStyle: 'expanded'
-        includePaths: [ './bower_components/' ]
-      ).on 'error', sass.logError
-    .pipe autoprefixer [ '> 1%' ]
-    .pipe sourcemaps.write '../map'
-    .pipe gulp.dest dest + '/css'
-    .pipe livereload()
+# gulp.task 'sass', ->
+#   return gulp.src './src/sass/**/*.sass'
+#     .pipe sourcemaps.init()
+#     .pipe sass(
+#         outputStyle: 'expanded'
+#         includePaths: [ './bower_components/' ]
+#       ).on 'error', sass.logError
+#     .pipe autoprefixer [ '> 1%' ]
+#     .pipe sourcemaps.write '../map'
+#     .pipe gulp.dest dest + '/css'
+#     .pipe livereload()
 
 gulp.task 'coffee', ->
   return gulp.src './src/coffee/**/*.coffee'
@@ -59,8 +59,8 @@ gulp.task 'coffee', ->
 gulp.task 'reload', ->
   return livereload.reload()
 
-gulp.task 'watch', [ 'copystatic', 'copyfont', 'copycss', 'sass', 'copyjs', 'coffee' ], ->
-  gulp.watch './src/sass/**/*.sass', [ 'sass' ]
+gulp.task 'watch', [ 'copystatic', 'copyfont', 'copycss', 'copyjs', 'coffee' ], ->
+  # gulp.watch './src/sass/**/*.sass', [ 'sass' ]
   gulp.watch './src/coffee/**/*.coffee', [ 'coffee' ]
   gulp.watch './views/**/*.jade', [ 'reload' ]
   gulp.watch './static/**/*.*', [ 'copystatic', 'reload' ]

@@ -10,6 +10,7 @@
   "author": "Taylor Young (taylor@hyprtxt.com)",
   "license": "MIT",
   "dependencies": {
+    "async": "^1.5.2",
     "coffee-script": "^1.10.0",
     "confidence": "^1.2.0",
     "good": "^6.3.0",
@@ -30,6 +31,7 @@
     "jstransformer-markdown-it": "^0.1.0",
     "nodemon": "^1.4.1",
     "rimraf": "^2.4.3",
+    "rpi-gpio": "^0.7.0",
     "socket.io": "^1.4.5",
     "tedious": "^1.12.3",
     "vision": "^3.0.0"

@@ -4,9 +4,18 @@ block content
   .row
     .col-md-12
       h1 Welcome to Raspi GPIO
-      button.btn.btn-primary#btn1 1
-      button.btn.btn-primary#btn2 2
-      button.btn.btn-primary#btn3 3
-      button.btn.btn-primary#btn4 4
-      button.btn.btn-primary#btn5 5
-      button.btn.btn-primary#btn6 6
+      #btn1.btn.btn-primary.input 1
+      #btn2.btn.btn-primary.input 2
+      #btn3.btn.btn-primary.input 3
+      #btn4.btn.btn-primary.input 4
+      #btn5.btn.btn-primary.input 5
+      #btn6.btn.btn-primary.input 6
+    .col-md-12.m-t
+      #light36.btn.output 36
+      #light38.btn.output 38
+      #light40.btn.output 40
+  style.
+    .output { cursor: default; }
+    #light36.active { background: #0cf; }
+    #light38.active { background: #cf0; }
+    #light40.active { background: #0fc; }

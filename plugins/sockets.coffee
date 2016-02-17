@@ -1,27 +1,6 @@
 gpio = require 'rpi-gpio'
 async = require 'async'
 
-delay = 5
-
-delayedWrite = ( pin, value, done ) ->
-  gpio.write pin, value, ->
-    setTimeout ->
-      done()
-      return
-    , delay
-    return
-  return
-
-blink = ( pin, done ) ->
-  delayedWrite pin, true, ->
-    setTimeout ->
-      delayedWrite pin, false, ->
-        done()
-        return
-      return
-    , 200
-    return
-
 gpio.setup 40, gpio.DIR_IN, gpio.EDGE_BOTH
 gpio.setup 38, gpio.DIR_IN, gpio.EDGE_BOTH
 gpio.setup 36, gpio.DIR_IN, gpio.EDGE_BOTH
@@ -68,19 +47,16 @@ exports.register = ( server, options, next ) ->
 
   io.on 'connection', ( socket ) ->
     gpio.on 'change', ( channel, value ) ->
+      console.log channel, value
       socket.emit 'button',
         channel: channel
         value: value
-      if channel is 40
-        delayedWrite 33, value, ->
-      if channel is 38
-        delayedWrite 35, value, ->
-      if channel is 36
-        delayedWrite 37, value, ->
       return
     socket
       .on 'link', ( data ) ->
         console.log data
+        gpio.write data.pin, data.value, ->
+          return
         socket.emit 'status',  status: 'good'
         return
       .on 'disconnect', ->
